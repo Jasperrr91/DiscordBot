@@ -12,7 +12,6 @@ const RPC_PASSWORD = argv['rpc-password'] || process.env.TIPBOT_RPC_PASSWORD
 const RPC_PORT = argv['rpc-port'] || process.env.TIPBOT_RPC_PORT || 9998
 const WALLET_PASSW = argv['wallet-password'] || process.env.TIPBOT_WALLET_PASSWORD
 
-assert(SLACK_TOKEN, '--slack-token or TIPBOT_SLACK_TOKEN is required')
 assert(RPC_USER, '--rpc-user or TIPBOT_RPC_USER is required')
 assert(RPC_PASSWORD, '--rpc-password or TIPBOT_RPC_PASSWORD is required')
 
