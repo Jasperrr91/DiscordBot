@@ -1,3 +1,28 @@
+let _ = require('lodash')
+let debug = require('debug')
+let assert = require('assert')
+let parseArgs = require('minimist')
+let argv = parseArgs(process.argv.slice(2))
+
+let tipbot = null
+
+const SLACK_TOKEN = argv['slack-token'] || process.env.TIPBOT_SLACK_TOKEN
+const RPC_USER = argv['rpc-user'] || process.env.TIPBOT_RPC_USER
+const RPC_PASSWORD = argv['rpc-password'] || process.env.TIPBOT_RPC_PASSWORD
+const RPC_PORT = argv['rpc-port'] || process.env.TIPBOT_RPC_PORT || 9998
+const WALLET_PASSW = argv['wallet-password'] || process.env.TIPBOT_WALLET_PASSWORD
+
+assert(SLACK_TOKEN, '--slack-token or TIPBOT_SLACK_TOKEN is required')
+assert(RPC_USER, '--rpc-user or TIPBOT_RPC_USER is required')
+assert(RPC_PASSWORD, '--rpc-password or TIPBOT_RPC_PASSWORD is required')
+
+const TIPBOT_OPTIONS = {
+	WALLET_PASSW: WALLET_PASSW,
+	ALL_BALANCES: true,
+	OTHER_BALANCES: true,
+}
+
+
 var fs = require('fs');
 
 try {
@@ -75,45 +100,8 @@ if(!Config.hasOwnProperty("commandPrefix")){
 }
 
 var messagebox;
-var aliases;
-try{
-	aliases = require("./alias.json");
-} catch(e) {
-	//No aliases defined
-	aliases = {};
-}
 
-var commands = {	
-	"alias": {
-		usage: "<name> <actual command>",
-		description: "Creates command aliases. Useful for making simple commands on the fly",
-		process: function(bot,msg,suffix) {
-			var args = suffix.split(" ");
-			var name = args.shift();
-			if(!name){
-				msg.channel.sendMessage(Config.commandPrefix + "alias " + this.usage + "\n" + this.description);
-			} else if(commands[name] || name === "help"){
-				msg.channel.sendMessage("overwriting commands with aliases is not allowed!");
-			} else {
-				var command = args.shift();
-				aliases[name] = [command, args.join(" ")];
-				//now save the new alias
-				require("fs").writeFile("./alias.json",JSON.stringify(aliases,null,2), null);
-				msg.channel.sendMessage("created alias " + name);
-			}
-		}
-	},
-	"aliases": {
-		description: "lists all recorded aliases",
-		process: function(bot, msg, suffix) {
-			var text = "current aliases:\n";
-			for(var a in aliases){
-				if(typeof a === 'string')
-					text += a + " ";
-			}
-			msg.channel.sendMessage(text);
-		}
-	},
+var commands = {
     "ping": {
         description: "responds pong, useful for checking if bot is alive",
         process: function(bot, msg, suffix) {
@@ -122,32 +110,6 @@ var commands = {
                 msg.channel.sendMessage( "note that !ping takes no arguments!");
             }
         }
-    },
-    "idle": {
-				usage: "[status]",
-        description: "sets bot status to idle",
-        process: function(bot,msg,suffix){ 
-	    bot.user.setStatus("idle");
-	    bot.user.setGame(suffix);
-	}
-    },
-    "online": {
-				usage: "[status]",
-        description: "sets bot status to online",
-        process: function(bot,msg,suffix){ 
-	    bot.user.setStatus("online");
-	    bot.user.setGame(suffix);
-	}
-    },
-    "say": {
-        usage: "<message>",
-        description: "bot says message",
-        process: function(bot,msg,suffix){ msg.channel.sendMessage(suffix);}
-    },
-	"announce": {
-        usage: "<message>",
-        description: "bot says message with text to speech",
-        process: function(bot,msg,suffix){ msg.channel.sendMessage(suffix,{tts:true});}
     },
 	"msg": {
 		usage: "<user> <message to leave user>",
@@ -170,28 +132,17 @@ var commands = {
 			updateMessagebox();
 			msg.channel.sendMessage("message saved.")
 		}
-	},
-	"eval": {
-		usage: "<command>",
-		description: 'Executes arbitrary javascript in the bot process. User must have "eval" permission',
-		process: function(bot,msg,suffix) {
-			if(Permissions.checkPermission(msg.author,"eval")){
-				msg.channel.sendMessage( eval(suffix,bot));
-			} else {
-				msg.channel.sendMessage( msg.author + " doesn't have permission to execute eval!");
-			}
-		}
 	}
 };
 
-if(AuthDetails.hasOwnProperty("client_id")){
-	commands["invite"] = {
-		description: "generates an invite link you can use to invite the bot to your server",
-		process: function(bot,msg,suffix){
-			msg.channel.sendMessage("invite link: https://discordapp.com/oauth2/authorize?&client_id=" + AuthDetails.client_id + "&scope=bot&permissions=470019135");
-		}
-	}
-}
+// if(AuthDetails.hasOwnProperty("client_id")){
+// 	commands["invite"] = {
+// 		description: "generates an invite link you can use to invite the bot to your server",
+// 		process: function(bot,msg,suffix){
+// 			msg.channel.sendMessage("invite link: https://discordapp.com/oauth2/authorize?&client_id=" + AuthDetails.client_id + "&scope=bot&permissions=470019135");
+// 		}
+// 	}
+// }
 
 
 try{
@@ -210,7 +161,14 @@ bot.on("ready", function () {
 	console.log("Logged in! Serving in " + bot.guilds.array().length + " servers");
 	require("./plugins.js").init();
 	console.log("type "+Config.commandPrefix+"help in Discord for a commands list.");
-	bot.user.setGame(Config.commandPrefix+"help | " + bot.guilds.array().length +" Servers"); 
+	bot.user.setGame(Config.commandPrefix+"help | " + bot.guilds.array().length +" Servers");
+
+	if (tipbot === null) {
+		debug('tipbot:bot')('******** Setup TipBot ********')
+		// load TipBot after mongoose model is loaded
+		var TipBot = require('./lib/tipbot')
+		tipbot = new TipBot(bot, RPC_USER, RPC_PASSWORD, RPC_PORT, TIPBOT_OPTIONS)
+	}
 });
 
 bot.on("disconnected", function () {
@@ -235,12 +193,6 @@ function checkMessageForCommand(msg, isEdit) {
 				return;
 			}
         }
-		alias = aliases[cmdTxt];
-		if(alias){
-			console.log(cmdTxt + " is an alias, constructed command is " + alias.join(" ") + " " + suffix);
-			cmdTxt = alias[0];
-			suffix = alias[1] + " " + suffix;
-		}
 		var cmd = commands[cmdTxt];
         if(cmdTxt === "help"){
             //help is special since it iterates over the other commands

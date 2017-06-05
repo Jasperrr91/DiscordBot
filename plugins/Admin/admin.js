@@ -1,23 +1,8 @@
 exports.commands = [
-	"setUsername",
-	"log",
 	"uptime"
 ]
 
 var startTime = Date.now();
-
-exports.setUsername = {
-	description: "sets the username of the bot. Note this can only be done twice an hour!",
-	process: function(bot,msg,suffix) {
-		bot.user.setUsername(suffix);
-	}
-}
-
-exports.log = {
-	usage: "<log message>",
-	description: "logs message to bot console",
-	process: function(bot,msg,suffix){console.log(msg.content);}
-}
 
 exports.uptime = {
 	usage: "",
