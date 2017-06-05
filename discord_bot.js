@@ -104,12 +104,15 @@ var commands = {
 	"deposit": {
 		description: "Get an address to deposit MoonCoin",
 		process: function(bot, msg, suffix) {
+			console.log("start deposit process");
 			tipbot.wallet.TellDepositeAddress(msg.author)
 				.then(line => {
-					msg.author.sendMessage(line)
+					console.log("succesful throughput");
+					msg.author.sendMessage(line);
 				})
 				.catch(err => {
-					debug('ERROR: cannot find a deposit address for \'' + user.username + '(' + user.id + ') : ' + err)
+					console.log("error encountered");
+					debug('ERROR: cannot find a deposit address for \'' + user.username + '(' + user.id + ') : ' + err);
 				})
 
 			msg.channel.sendMessage( msg.author+" looking up deposit address!");
