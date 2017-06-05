@@ -105,6 +105,8 @@ var commands = {
 		description: "Get an address to deposit MoonCoin",
 		process: function(bot, msg, suffix) {
 			console.log("start deposit process");
+			console.log("for user", msg.author);
+			console.log(msg.author);
 			tipbot.wallet.TellDepositeAddress(msg.author)
 				.then(line => {
 					console.log("succesful throughput");
