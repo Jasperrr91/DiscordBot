@@ -102,6 +102,20 @@ if(!Config.hasOwnProperty("commandPrefix")){
 var messagebox;
 
 var commands = {
+	"deposit": {
+		description: "Get an address to deposit MoonCoin",
+		process: function(bot, msg, suffix) {
+			tipbot.wallet.TellDepositeAddress(msg.author)
+				.then(line => {
+					msg.author.sendMessage(line)
+				})
+				.catch(err => {
+					debug('ERROR: cannot find a deposit address for \'' + user.username + '(' + user.id + ') : ' + err)
+				})
+
+			msg.channel.sendMessage( msg.author+" looking up deposit address!");
+		}
+	},
     "ping": {
         description: "responds pong, useful for checking if bot is alive",
         process: function(bot, msg, suffix) {

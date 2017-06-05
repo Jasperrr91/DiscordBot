@@ -27,12 +27,9 @@
     "async": "^2.1.0",
     "base58check": "^2.0.0",
     "bitcoin": "^3.0.1",
-    "botkit": "^0.4.7",
     "debug": "^2.6.0",
     "lodash": "^4.17.0",
     "minimist": "^1.1.0",
-    "mongoose": "^4.7.0",
-    "mongoose-auto-increment": "^5.0.1",
     "waitjs": "^0.2.0"
   },
   "devDependencies": {
