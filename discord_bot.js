@@ -155,7 +155,7 @@ var commands = {
             }
 
             msg.channel.sendMessage( "Picking target!");
-            console.log(msg.channel.guild.members);
+            // console.log(msg.channel.guild.members);
             console.log(msg.channel.guild.members.find("id", user));
             var target = msg.channel.guild.members.find("id",user);
 
