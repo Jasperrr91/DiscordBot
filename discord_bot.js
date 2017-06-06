@@ -173,23 +173,17 @@ var commands = {
                             msg.author.sendMessage(responses.privateToSender);
                             // response to reciever:  inform of the tip
                             mentioned.sendMessage(responses.privateToReciever);
-
                         })
-                        .catch()
-                            // save tip to database for Rain feature
-                            //if (tipbot.OPTIONS.ENABLE_RAIN_FEATURE) { tipbot.rain.IncTipCountInDb(user) }
+                        .catch(err => {
+                            debug('ERROR: cannot send ' + converted.newValue + ' to ' + mentioned.username + '(' + mentioned.id + ') : ' + err)
+                            // warn sender about the error
+                            // response to sender: send thanks and new ballance
+                            msg.author.sendMessage(err);
+                            return;
                         })
-                    .catch(err => {
-                        debug('ERROR: cannot send ' + converted.newValue + ' to ' + mentioned.username + '(' + mentioned.id + ') : ' + err)
-                    // warn sender about the error
-                    // response to sender: send thanks and new ballance
-                    msg.author.sendMessage(err);
-                    return
+                .catch(errTxt => {
+                    msg.channel.sendMessage(errTxt);
                 })
-            })
-            .catch(errTxt => {
-                msg.channel.sendMessage(errTxt);
-            })
 
         }
     },
