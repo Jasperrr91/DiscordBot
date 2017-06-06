@@ -128,6 +128,32 @@ var commands = {
                 })
         }
     },
+    "tip": {
+        usage: "<user> <amount to tip>";
+        description: "Send a tip to an user",
+        process: function(bot, msg, suffix) {
+            if(!suffix){
+                msg.channel.sendMessage("Don't forget to include the user and tip amount!");
+            } else {
+                var args = suffix.split(' ');
+                if(args.length < 2) {
+                    msg.channel.sendMessage("Don't forget to include the user and tip amount!");
+                } else {
+                    var user = args.shift();
+                    var amount = args.shift();
+                    if(user.startsWith('<@')){
+                        user = user.substr(2,user.length-3);
+                    }
+                    var target = msg.channel.guild.members.find("id",user);
+                    if(!target){
+                        target = msg.channel.guild.members.find("username",user);
+                    }
+
+                    console.log(target);
+                }
+            }
+        }
+    },
     "ping": {
         description: "responds pong, useful for checking if bot is alive",
         process: function(bot, msg, suffix) {
