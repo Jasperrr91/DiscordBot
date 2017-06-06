@@ -181,10 +181,10 @@ var commands = {
                             msg.author.sendMessage(err);
                             return;
                         })
+                })
                 .catch(errTxt => {
                     msg.channel.sendMessage(errTxt);
                 })
-
         }
     },
     "ping": {
