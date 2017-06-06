@@ -161,15 +161,15 @@ var commands = {
                 return;
             }
 
-            tipbot.normalizeValue(amount, "mooncoin", user)
+            tipbot.normalizeValue(amount, "mooncoin", msg.author)
                 .then(converted => {
                 // send amount (move between accounts in wallet)
-                    console.log(mentioned.username + " got a tip of amount: " + amount + "from: "+user.username);
-                    tipbot.wallet.Move(mentioned, converted.newValue, user)
+                    console.log(mentioned.username + " got a tip of amount: " + amount + "from: " + msg.author.username);
+                    tipbot.wallet.Move(mentioned, converted.newValue, msg.author)
                         .then(responses => {
                             // response in public channel:  announce tip
                             msg.channel.sendMessage(responses.public);
-                            // response to sender: send thanks and new ballance
+                            // response to sender: send thanks and new balance
                             msg.author.sendMessage(responses.privateToSender);
                             // response to reciever:  inform of the tip
                             mentioned.sendMessage(responses.privateToReciever);
