@@ -154,12 +154,9 @@ var commands = {
                 return;
             }
 
-            msg.channel.sendMessage( "Picking target!");
-            // console.log(msg.channel.guild.members);
-            console.log(msg.channel.guild.members.get(user)['user']);
             var target = msg.channel.guild.members.get(user)['user'];
 
-            msg.channel.sendMessage( "Tipping that guy");
+            msg.channel.sendMessage( "Tipping " + target.username);
             console.log("Target is:");
             console.log(target);
         }
