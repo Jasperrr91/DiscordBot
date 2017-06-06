@@ -147,17 +147,28 @@ var commands = {
             }
 
             var address = args.shift();
-            console.log('start address shit');
             if (address) {
                 address = _.uniq(_.filter(address, function (address) {
                     try {
                         base58check.decode(address)
-                        console.log('basecheck');
                         return true
                     } catch (e) {
                         return false
                     }
                 }))
+
+                if (!address.length) {
+                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoValidAddress);
+                    return
+                } else if (address.length > 1) {
+                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.MoreThen1Address + ' [' + address.join(', ') + ']');
+                    return
+                }
+
+            } else {
+                // no address
+                msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoAddress);
+                return
             }
 
             var amount = args.shift();
@@ -167,7 +178,7 @@ var commands = {
                 return;
             }
 
-            tipbot.normalizeValue(amount[1], "mooncoin", user)
+            tipbot.normalizeValue(amount, "mooncoin", user)
                 .then(converted => {
                     msg.author.sendMessage(converted.text + " MoonCoins are being withdrawn to address: " + address +"!");
                     // msg.author.sendMessage(tipbotTxt.WithdrawQuestion[0] + converted.text +
