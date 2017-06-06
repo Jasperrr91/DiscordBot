@@ -134,29 +134,34 @@ var commands = {
         process: function(bot, msg, suffix) {
             if(!suffix){
                 msg.channel.sendMessage("Don't forget to include the user and tip amount!");
-            } else {
-                var args = suffix.split(' ');
-                if(args.length < 2) {
-                    msg.channel.sendMessage("Don't forget to include the user and tip amount!");
-                } else {
-                    var user = args.shift();
-                    var amount = args.shift();
-                    if(user.startsWith('<@')){
-                        user = user.substr(2,user.length-3);
-                        console.log(user);
-                    }
-                    return;
-                    msg.channel.sendMessage( "Picking target!");
-                    var target = msg.channel.guild.members.find("id",user);
-                    if(!target){
-                        target = msg.channel.guild.members.find("username",user);
-                    }
-
-                    msg.channel.sendMessage( "Tipping that guy");
-                    console.log("Target is:");
-                    console.log(target);
-                }
+                return;
             }
+
+            var args = suffix.split(' ');
+
+            if(args.length < 2) {
+                msg.channel.sendMessage("Don't forget to include the user and tip amount!");
+                return;
+            }
+
+            var user = args.shift();
+            var amount = args.shift();
+
+            if(user.startsWith('<@')){
+                user = user.substr(2,user.length-3);
+            } else {
+                msg.channel.sendMessage("Please input the username with the @ selector so we don't send your MoonCoins to the wrong guy!");
+                return;
+            }
+
+            msg.channel.sendMessage( "Picking target!");
+            console.log(msg.channel.guild.members);
+            console.log(msg.channel.guild.members.find("id", user));
+            var target = msg.channel.guild.members.find("id",user);
+
+            msg.channel.sendMessage( "Tipping that guy");
+            console.log("Target is:");
+            console.log(target);
         }
     },
     "ping": {
