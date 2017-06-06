@@ -143,12 +143,13 @@ var commands = {
                     var amount = args.shift();
                     if(user.startsWith('<@')){
                         user = user.substr(2,user.length-3);
+                        console.log(user);
                     }
                     var target = msg.channel.guild.members.find("id",user);
                     if(!target){
                         target = msg.channel.guild.members.find("username",user);
                     }
-
+                    console.log("Target is:");
                     console.log(target);
                 }
             }
