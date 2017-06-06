@@ -154,11 +154,43 @@ var commands = {
                 return;
             }
 
-            var target = msg.channel.guild.members.get(user)['user'];
+            var mentioned = msg.channel.guild.members.get(user)['user'];
 
-            msg.channel.sendMessage( "Tipping " + target.username);
-            console.log("Target is:");
-            console.log(target);
+            if(isNaN(amount)) {
+                msg.channel.sendMessage("Please enter the amount you want to tip " + mentioned.username);
+                return;
+            }
+
+            tipbot.normalizeValue(amount, "mooncoin", user)
+                .then(converted => {
+                // send amount (move between accounts in wallet)
+                    console.log(mentioned.username + " got a tip of amount: " + amount + "from: "+user.username);
+                    tipbot.wallet.Move(mentioned, converted.newValue, user)
+                        .then(responses => {
+                            // response in public channel:  announce tip
+                            msg.channel.sendMessage(responses.public);
+                            // response to sender: send thanks and new ballance
+                            msg.author.sendMessage(responses.privateToSender);
+                            // response to reciever:  inform of the tip
+                            mentioned.sendMessage(responses.privateToReciever);
+
+                        })
+                        .catch()
+                            // save tip to database for Rain feature
+                            //if (tipbot.OPTIONS.ENABLE_RAIN_FEATURE) { tipbot.rain.IncTipCountInDb(user) }
+                        })
+                    .catch(err => {
+                        debug('ERROR: cannot send ' + converted.newValue + ' to ' + mentioned.username + '(' + mentioned.id + ') : ' + err)
+                    // warn sender about the error
+                    // response to sender: send thanks and new ballance
+                    msg.author.sendMessage(err);
+                    return
+                })
+            })
+            .catch(errTxt => {
+                msg.channel.sendMessage(errTxt);
+            })
+
         }
     },
     "ping": {
