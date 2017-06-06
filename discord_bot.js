@@ -195,6 +195,8 @@ var commands = {
                 return;
             }
 
+            console.log(suffix);
+
             var args = suffix.split(' ');
 
             if(args.length < 2) {
@@ -205,15 +207,19 @@ var commands = {
             var user = args.shift();
             var amount = args.shift();
 
+            console.log(user);
+
             if(user.startsWith('<@')){
                 user = user.substr(2,user.length-3);
             } else {
                 msg.channel.sendMessage("Please input the username with the @ selector so we don't send your MoonCoins to the wrong guy!");
                 return;
             }
+            console.log(user);
 
             var mentioned = msg.channel.guild.members.get(user)['user'];
 
+            console.log(mentioned);
             if(isNaN(amount)) {
                 msg.channel.sendMessage("Please enter the amount you want to tip " + mentioned.username);
                 return;
