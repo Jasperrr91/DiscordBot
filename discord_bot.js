@@ -170,6 +170,7 @@ var commands = {
                 msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoAddress);
                 return
             }
+            console.log('working');
 
             var amount = args.shift();
 
@@ -177,9 +178,10 @@ var commands = {
                 msg.author.sendMessage("Please enter a number for the amount you want to withdraw");
                 return;
             }
-
+            console.log('working1');
             tipbot.normalizeValue(amount, "mooncoin", user)
                 .then(converted => {
+                    console.log('converted');
                     msg.author.sendMessage(converted.text + " MoonCoins are being withdrawn to address: " + address +"!");
                     // msg.author.sendMessage(tipbotTxt.WithdrawQuestion[0] + converted.text +
                 // tipbotTxt.WithdrawQuestion[1] + address +
@@ -187,8 +189,11 @@ var commands = {
 
                 })
                 .catch(errTxt => {
+                    console.log('not converted');
                     msg.author.sendMessage(errTxt);
                 })
+
+            console.log('working final');
 
         }
     },
