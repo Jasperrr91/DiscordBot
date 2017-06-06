@@ -216,6 +216,10 @@ var commands = {
                 return;
             }
             console.log(user);
+            if(user.startsWith('!')){
+                user = user.substr(1,user.length-1);
+            }
+            console.log(user);
 
             var mentioned = msg.channel.guild.members.get(user)['user'];
 
