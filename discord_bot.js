@@ -115,6 +115,19 @@ var commands = {
 			msg.channel.sendMessage( msg.author+" looking up deposit address!");
 		}
 	},
+    "balance": {
+        description: "Check your current balance",
+        process: function(bot, msg, suffix) {
+            tipbot.wallet.GetBalanceLine(msg.author)
+                .then(line => {
+                    msg.author.sendMessage(line);
+                })
+                .catch(err => {
+                    debug('ERROR: cannot tell ballance of ' + msg.author.username + '/' + msg.author.id)
+                    msg.author.sendMessage(err);
+                })
+        }
+    },
     "ping": {
         description: "responds pong, useful for checking if bot is alive",
         process: function(bot, msg, suffix) {
