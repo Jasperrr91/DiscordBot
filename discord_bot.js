@@ -129,7 +129,7 @@ var commands = {
         }
     },
     "tip": {
-        usage: "<user> <amount to tip>";
+        usage: "<user> <amount to tip>",
         description: "Send a tip to an user",
         process: function(bot, msg, suffix) {
             if(!suffix){
