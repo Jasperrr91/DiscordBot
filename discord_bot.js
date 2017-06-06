@@ -147,29 +147,14 @@ var commands = {
             }
 
             var address = args.shift();
-            if (address) {
-                address = _.uniq(_.filter(address, function (address) {
-                    try {
-                        base58check.decode(address)
-                        return true
-                    } catch (e) {
-                        return false
-                    }
-                }))
-
-                if (!address.length) {
-                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoValidAddress);
-                    return
-                } else if (address.length > 1) {
-                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.MoreThen1Address + ' [' + address.join(', ') + ']');
-                    return
-                }
-
-            } else {
-                // no address
-                msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoAddress);
-                return
+            try {
+                base58check.decode(address)
+                console.log('check true');
+            } catch (e) {
+                console.log('check false');
+                return false
             }
+            
             console.log('working');
 
             var amount = args.shift();
