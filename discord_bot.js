@@ -158,19 +158,6 @@ var commands = {
                         return false
                     }
                 }))
-                console.log('address length');
-                if (!address.length) {
-                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoValidAddress);
-                    return
-                } else if (address.length > 1) {
-                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.MoreThen1Address + ' [' + address.join(', ') + ']');
-                    return
-                }
-
-            } else {
-                // no address
-                msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoAddress);
-                return
             }
 
             var amount = args.shift();
