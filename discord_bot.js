@@ -145,10 +145,13 @@ var commands = {
                         user = user.substr(2,user.length-3);
                         console.log(user);
                     }
+                    msg.channel.sendMessage( "Picking target!");
                     var target = msg.channel.guild.members.find("id",user);
                     if(!target){
                         target = msg.channel.guild.members.find("username",user);
                     }
+
+                    msg.channel.sendMessage( "Tipping that guy");
                     console.log("Target is:");
                     console.log(target);
                 }
