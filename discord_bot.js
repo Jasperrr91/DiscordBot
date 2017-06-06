@@ -133,29 +133,30 @@ var commands = {
         description: "Withdraw your MoonCoins",
         process: function(bot, msg, suffix) {
             if(!suffix){
-                msg.channel.sendMessage("Don't forget to include the amount of Mooncoins you'd like to withdraw!");
+                msg.channel.sendMessage("Use as !withdraw <address> <amount to withdraw>");
                 return;
             }
 
             var args = suffix.split(' ');
 
             if(args.length < 2) {
-                msg.channel.sendMessage("Don't forget to include both the address and withdrawal amount!");
+                msg.channel.sendMessage("Use as !withdraw <address> <amount to withdraw>");
                 return;
             }
 
             var address = args.shift();
-
+            console.log('start address shit');
             if (address) {
                 address = _.uniq(_.filter(address, function (address) {
                     try {
                         base58check.decode(address)
+                        console.log('basecheck');
                         return true
                     } catch (e) {
                         return false
                     }
                 }))
-
+                console.log('address length');
                 if (!address.length) {
                     msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoValidAddress);
                     return
