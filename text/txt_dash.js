@@ -207,7 +207,7 @@ const userTxt = {
   // SEND
   'SendPublicMessage1': ':clap: ',
   'SendPublicMessage2': ' tipped ',
-  'SendPrivateMssSendingUser': ' you\'re a great MoonCoins Chat user :thumbsup: \nLets see how much there is left in your tip jar now: \n',
+  'SendPrivateMssSendingUser': ' you\'re a great MoonChan user :thumbsup: \nLets see how much there is left in your tip jar now: \n',
   'SendPrivateMssRecievingUser1': 'Hi there ',
   'SendPrivateMssRecievingUser2': ', you just received ',
   'SendPrivateMssRecievingUser3': ' from ',
