@@ -12,7 +12,7 @@ const tipbotTxt = {
 
     //'help_send':
     '*send*\t\t\t\ttell the bot to send coins to someone; \n' +
-    '\t\t_@tipbot send 0.1 XBY to @someone_ \n' +
+    '\t\t_@tipbot send 0.1 MoonCoins to @someone_ \n' +
     '\t\t_aliases: give, tip_ \n' +
     '\t\t\t\tWorks also with major fiat currencies (use *currencies* command to see the list); \n' +
     '\t\t_@tipbot give 4 USD to @someone_',
@@ -23,7 +23,7 @@ const tipbotTxt = {
     // 'help_withdraw':
     '*withdraw*\ttell the bot to withdraw an amount to an address. \n' +
     '\t\t\t\t\tYou can also use _all_ to withdraw your complete balance (minus the tx fee) \n' +
-    '\t\t_@tipbot withdraw 1 XBY to XqyTXt9LM3AHdrfG8ckdTatDiwk5514a11_',
+    '\t\t_@tipbot withdraw 1 MoonCoins to XqyTXt9LM3AHdrfG8ckdTatDiwk5514a11_',
 
     // 'help_currencies':
     '*currencies*\task the bot for a list of supported currencies.\n' +
@@ -38,8 +38,8 @@ const tipbotTxt = {
     '\t\t_aliases: pricelist, prices_ \n' +
 
     // 'help_convert':
-    '*convert*\t\task the bot to convert between a particular currency and XBY (or visa versa).\n' +
-    '\t\t_@tipbot 0.03 XBY to GBP_ \t or \t _@tipbot 15 EURO to XBY_\n',
+    '*convert*\t\task the bot to convert between a particular currency and MoonCoins (or visa versa).\n' +
+    '\t\t_@tipbot 0.03 MoonCoins to GBP_ \t or \t _@tipbot 15 EURO to MoonCoins\n',
   ],
 
   'help_rain':
@@ -142,7 +142,7 @@ const tipbotTxt = {
 
   // RAIN
   'RainThreshold1': 'Rain threshold is: ',
-  'RainThreshold2': 'Raindrops (aka free XtraBYtes) will fall when rain balance is more then the set threshold.',
+  'RainThreshold2': 'Raindrops (aka free MoonCoins) will fall when rain balance is more then the set threshold.',
   'RainThresholdNotSet': 'Dear XBY God, the Rain threshold isn\'t set yet. \n' +
   ' You can do that with the *rain threshold _amount_* command.',
   // 'RainTimer': 'Rainshine will be checked every *',
@@ -158,9 +158,9 @@ const tipbotTxt = {
   'RainCannotFindRainBalance': 'Could not find the Rain balance for ',
   'RainReqDonation1': 'If you feel generous: tip _@',
   'RainReqDonation2': 'The complete balance of _@',
-  'RainReqDonation3': '_ will be redistributed as _raindrops_ (aka free XtraBYtes).',
+  'RainReqDonation3': '_ will be redistributed as _raindrops_ (aka free MoonCoins).',
   'RainEmpty': ':sun_behind_cloud:no raindrops available to cast. :disappointed:',
-  'RainRecieved': 'As reward of tipping your fellow XBY user(s) you received a raindrop of ',
+  'RainRecieved': 'As reward of tipping your fellow MoonCoins user(s) you received a raindrop of ',
   'RainEligibleUsersList': '*These users have tipped* \n',
   'RainErrorResettingCounter': 'Error cannot reset counts. Inform the admin.',
   'RainCountIsReset': 'All tip count records are removed.',
@@ -191,11 +191,11 @@ const userTxt = {
   'Locked': ' , sorry you\re already doing a transaction. \n Wait a moment before starting a new one.',
 
   // GET BALANCES
-  'BaseCurrency': 'XtraBYtes',
+  'BaseCurrency': 'MoonCoins',
   'BalanceIs': ' your tip jar contains: ',
   'UnconfirmedBalance1': 'you have an unconfirmed balance (less than ',
   'UnconfirmedBalance2': ' confirmations) of ',
-  'BalanceWarningHigh': 'This tip jar is filling up. Please consider withdrawing some XBY.',
+  'BalanceWarningHigh': 'This tip jar is filling up. Please consider withdrawing some MoonCoins.',
   'NoBalance': 'You don\'t have a balance (yet). Use the _deposit_ command to fill your tip jar.',
 
   // WITHDRAW
@@ -207,7 +207,7 @@ const userTxt = {
   // SEND
   'SendPublicMessage1': ':clap: ',
   'SendPublicMessage2': ' tipped ',
-  'SendPrivateMssSendingUser': ' you\'re a great XBY Chat user :thumbsup: \nLets see how much there is left in your tip jar now: \n',
+  'SendPrivateMssSendingUser': ' you\'re a great MoonCoins Chat user :thumbsup: \nLets see how much there is left in your tip jar now: \n',
   'SendPrivateMssRecievingUser1': 'Hi there ',
   'SendPrivateMssRecievingUser2': ', you just received ',
   'SendPrivateMssRecievingUser3': ' from ',
