@@ -164,8 +164,16 @@ var commands = {
             }
             tipbot.normalizeValue(amount, "mooncoin", msg.author)
                 .then(converted => {
-                    console.log('converted');
-                    msg.author.sendMessage(converted.text + " MoonCoins are being withdrawn to address: " + address +"!");
+                    tipbot.wallet.Withdraw(converted.newValue, address, tipbot.OPTIONS.WALLET_PASSW, msg.author)
+                        .then(response => {
+                            debug(user.username + ' has succesfull withdrawn ' + converted.text + ' to ' + address)
+                            msg.author.sendMessage(converted.text + " MoonCoins are being withdrawn to address: " + address +"!");
+                        })
+                        .catch(err => {
+                            debug('ERROR: cannot withdraw because: ' + err)
+                            msg.author.sendMessage(err);
+                        })
+
                     // msg.author.sendMessage(tipbotTxt.WithdrawQuestion[0] + converted.text +
                 // tipbotTxt.WithdrawQuestion[1] + address +
                 // tipbotTxt.WithdrawQuestion[2]);
