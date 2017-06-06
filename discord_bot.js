@@ -102,7 +102,7 @@ var messagebox;
 
 var commands = {
 	"deposit": {
-		description: "Get an address to deposit MoonCoin",
+		description: "Get an address to deposit MoonCoins",
 		process: function(bot, msg, suffix) {
 			tipbot.wallet.TellDepositeAddress(msg.author)
 				.then(line => {
@@ -120,17 +120,80 @@ var commands = {
         process: function(bot, msg, suffix) {
             tipbot.wallet.GetBalanceLine(msg.author)
                 .then(line => {
-                    msg.author.sendMessage(line);
+                msg.author.sendMessage(line);
+        })
+            .catch(err => {
+                debug('ERROR: cannot tell ballance of ' + msg.author.username + '/' + msg.author.id)
+            msg.author.sendMessage(err);
+        })
+        }
+    },
+    "withdraw": {
+        usage: "<address> <amount to withdraw>",
+        description: "Withdraw your MoonCoins",
+        process: function(bot, msg, suffix) {
+            if(!suffix){
+                msg.channel.sendMessage("Don't forget to include the amount of Mooncoins you'd like to withdraw!");
+                return;
+            }
+
+            var args = suffix.split(' ');
+
+            if(args.length < 2) {
+                msg.channel.sendMessage("Don't forget to include both the address and withdrawal amount!");
+                return;
+            }
+
+            var address = args.shift();
+
+            if (address) {
+                address = _.uniq(_.filter(address, function (address) {
+                    try {
+                        base58check.decode(address)
+                        return true
+                    } catch (e) {
+                        return false
+                    }
+                }))
+
+                if (!address.length) {
+                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoValidAddress);
+                    return
+                } else if (address.length > 1) {
+                    msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.MoreThen1Address + ' [' + address.join(', ') + ']');
+                    return
+                }
+
+            } else {
+                // no address
+                msg.author.sendMessage('Sorry ' + user.handle + tipbotTxt.NoAddress);
+                return
+            }
+
+            var amount = args.shift();
+
+            if(isNaN(amount)) {
+                msg.author.sendMessage("Please enter a number for the amount you want to withdraw");
+                return;
+            }
+
+            tipbot.normalizeValue(amount[1], "mooncoin", user)
+                .then(converted => {
+                    msg.author.sendMessage(converted.text + " MoonCoins are being withdrawn to address: " + address +"!");
+                    // msg.author.sendMessage(tipbotTxt.WithdrawQuestion[0] + converted.text +
+                // tipbotTxt.WithdrawQuestion[1] + address +
+                // tipbotTxt.WithdrawQuestion[2]);
+
                 })
-                .catch(err => {
-                    debug('ERROR: cannot tell ballance of ' + msg.author.username + '/' + msg.author.id)
-                    msg.author.sendMessage(err);
+                .catch(errTxt => {
+                    msg.author.sendMessage(errTxt);
                 })
+
         }
     },
     "tip": {
         usage: "<user> <amount to tip>",
-        description: "Send a tip to an user",
+        description: "Make an user happy with some Mooncoins",
         process: function(bot, msg, suffix) {
             if(!suffix){
                 msg.channel.sendMessage("Don't forget to include the user and tip amount!");
