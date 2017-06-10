@@ -235,6 +235,8 @@ var commands = {
                     console.log(mentioned.username + " got a tip of amount: " + amount + " from: " + msg.author.username);
                     tipbot.wallet.Move(mentioned, converted.newValue, msg.author)
                         .then(responses => {
+                        	msg.react(":money_mouth:");
+							msg.react(":star2:");
                             // response in public channel:  announce tip
                             msg.channel.sendMessage(responses.public);
                             // response to sender: send thanks and new balance
