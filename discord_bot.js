@@ -207,6 +207,11 @@ var commands = {
             var user = args.shift();
             var amount = args.shift();
 
+			if(amount == "") {
+				amount = args.shift();
+			}
+
+
             console.log(user);
 
             if(user.startsWith('<@')){
