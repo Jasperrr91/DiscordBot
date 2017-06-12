@@ -229,6 +229,8 @@ var commands = {
                 return;
             }
 
+            console.log("MSG AUTHOR IS: "+msg.author);
+
             tipbot.normalizeValue(amount, "mooncoin", msg.author)
                 .then(converted => {
                 // send amount (move between accounts in wallet)
