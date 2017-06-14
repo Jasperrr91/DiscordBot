@@ -193,11 +193,11 @@ var commands = {
     },
 	"tosscoin": {
     	usage: "<heads/tails> <amount|max 5>",
-		description: "Throw a coin and gamble up to 5 Mooncoin. (1% House Edge)",
+		description: "Throw a coin and gamble up to 100 Mooncoin. (2% House Edge)",
 		process: function(bot, msg, suffix) {
     		if(!suffix){
 				var richEmbed = new Discord.RichEmbed()
-					.setDescription("Let's toss some coins and win some money!\n\nTo play: `!tosscoin heads/tails bet`\n\nDue to our small bankroll, you can currently bet up to 5 coins. You always have a 49.5% to win, this gives us a house edge of 1%.\n\n**Good luck!**")
+					.setDescription("Let's toss some coins and win some money!\n\nTo play: `!tosscoin heads/tails bet`\n\nDue to our small bankroll, you can currently bet up to 100 coins. You always have a 49.0% to win, this gives us a house edge of 2%.\n\n**Good luck!**")
 					.setColor(0x00AE86)
 					.setTimestamp();
 				msg.channel.sendEmbed(richEmbed);
@@ -226,9 +226,9 @@ var commands = {
 				return;
 			}
 
-			if(bet < 1 || bet > 5) {
+			if(bet < 1 || bet > 100) {
 				var richEmbed = new Discord.RichEmbed()
-					.setDescription("Please enter a bet between 1-5!")
+					.setDescription("Please enter a bet between 1-100!")
 					.setColor(0x00AE86)
 					.setTimestamp();
 				msg.channel.sendEmbed(richEmbed);
@@ -289,7 +289,8 @@ var commands = {
 			msg.channel.sendEmbed(richEmbed);
 
 			var randomInt = Math.floor(Math.random() * 1000) + 1;
-			if(randomInt < 495) {
+			if(randomInt < 490) {
+				//WIN
 				tipbot.normalizeValue(bet, "mooncoin", misterdice)
 					.then(converted => {
 					// send amount (move between accounts in wallet)
