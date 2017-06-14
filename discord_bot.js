@@ -297,7 +297,7 @@ var commands = {
 						tipbot.wallet.Move(msg.author, converted.newValue, misterdice)
 							.then(responses => {
 								var richEmbed = new Discord.RichEmbed()
-									.setDescription("The coin landed on **" + choice + "Congratulations " + msg.author.username + ", you have just won " + bet + " mooncoin!")
+									.setDescription("The coin landed on **" + choice + "**\n\nCongratulations " + msg.author.username + ", you have just won **" + bet + " mooncoin**!")
 									.setColor(0x00AE86)
 									.setTimestamp();
 								msg.channel.sendEmbed(richEmbed);
@@ -333,7 +333,7 @@ var commands = {
 						tipbot.wallet.Move(misterdice, converted.newValue, msg.author)
 							.then(responses => {
 								var richEmbed = new Discord.RichEmbed()
-									.setDescription("The coin landed on **" + result + "Congratulations " + msg.author.username + ", you have just won " + bet + " mooncoin!")
+									.setDescription("The coin landed on **" + result + "**\n\nSorry " + msg.author.username + ", you have lost **" + bet + " mooncoin**!")
 									.setColor(0x00AE86)
 									.setTimestamp();
 								msg.channel.sendEmbed(richEmbed);
