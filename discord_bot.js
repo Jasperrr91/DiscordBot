@@ -235,6 +235,7 @@ var commands = {
 				return;
 			}
 
+			console.log(tipbot.wallet.checkBalance(bet, 'misterdice'));
 			if(!tipbot.wallet.checkBalance(bet, 'misterdice')) {
 				var richEmbed = new Discord.RichEmbed()
 					.setDescription("Sorry, the bankroll is empty!")
@@ -294,6 +295,12 @@ var commands = {
 
 			} else {
 				// LOSE
+				if(choice == 'heads') {
+					var result = 'tails';
+				} else {
+					var result = 'heads';
+				}
+
 				tipbot.normalizeValue(bet, "mooncoin", msg.author)
 					.then(converted => {
 						// send amount (move between accounts in wallet)
@@ -301,7 +308,7 @@ var commands = {
 						tipbot.wallet.Move(misterdice, converted.newValue, msg.author)
 							.then(responses => {
 								var richEmbed = new Discord.RichEmbed()
-									.setDescription("The coin landed on **" + choice + "Congratulations " + msg.author.username + ", you have just won " + bet + " mooncoin!")
+									.setDescription("The coin landed on **" + result + "Congratulations " + msg.author.username + ", you have just won " + bet + " mooncoin!")
 									.setColor(0x00AE86)
 									.setTimestamp();
 								msg.channel.sendEmbed(richEmbed);
