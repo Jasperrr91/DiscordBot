@@ -241,7 +241,9 @@ var commands = {
 			tipbot.wallet.GetBalance(misterdice.id, 6)
 				.then(balance => {
 					console.log(balance);
-					if(balance < value) {
+					console.log("BALANCE IS: "+balance);
+					console.log("Value is:"+bet)
+					if(balance < bet) {
 						var richEmbed = new Discord.RichEmbed()
 							.setDescription("Sorry, the bankroll is empty!")
 							.setColor(0x00AE86)
