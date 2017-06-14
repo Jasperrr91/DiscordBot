@@ -235,6 +235,9 @@ var commands = {
 				return;
 			}
 
+			var misterdice = {};
+			misterdice.id = 'misterdice';
+
 			tipbot.wallet.GetBalance(misterdice, 6)
 				.then(balance => {
 					console.log(balance);
@@ -266,8 +269,7 @@ var commands = {
 				return;
 			}
 
-			var misterdice = {};
-			misterdice.id = 'misterdice';
+
 
 			var richEmbed = new Discord.RichEmbed()
 				.setDescription("Tossing the coin!")
