@@ -251,6 +251,7 @@ var commands = {
 					}
 				})
 				.catch(err => {
+					console.log("FAAL")
 					debug('ERROR: cannot check bankroll')
 					var richEmbed = new Discord.RichEmbed()
 						.setDescription("Oops something went wrong with checking the bankroll balance")
