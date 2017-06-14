@@ -383,7 +383,7 @@ function checkMessageForCommand(msg, isEdit) {
 							msg.channel.sendMessage(info);
 						} else {
 							var richEmbed = new Discord.RichEmbed()
-								.setDescription("So you want to tip other users? Awesome! Type `!deposit` to get a private deposit address to top up your tip wallet.\n\nThen, use `!tip @user [amount]` to make somebody happy!\nIf you happen to receive a big ass tip from someone and you wanna cash it out; just use `!withdraw`.\n\nFurther info has been sent as a DM!")
+								.setDescription("So you want to tip other users? Awesome! Type `!deposit` to get a private deposit address to top up your tip wallet.\n\nThen, use `!tip @user [amount]` to make somebody happy! Like `!tip @Jasper#4463 1337`.\n\nIf you happen to receive a big ass tip from someone and you wanna cash it out; just use `!withdraw`.\n\nFurther info has been sent as a DM!")
 								.setColor(0x00AE86)
 								.setTimestamp();
 							msg.channel.sendEmbed(richEmbed);
