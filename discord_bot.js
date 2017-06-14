@@ -256,7 +256,6 @@ var commands = {
 					msg.channel.sendEmbed(richEmbed)
 					return;
 				})
-			}
 
 			if(!tipbot.wallet.checkBalance(bet, msg.author.id)) {
 				var richEmbed = new Discord.RichEmbed()
