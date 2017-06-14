@@ -235,14 +235,27 @@ var commands = {
 				return;
 			}
 
-			console.log(tipbot.wallet.checkBalance(bet, 'misterdice'));
-			if(!tipbot.wallet.checkBalance(bet, 'misterdice')) {
-				var richEmbed = new Discord.RichEmbed()
-					.setDescription("Sorry, the bankroll is empty!")
-					.setColor(0x00AE86)
-					.setTimestamp();
-				msg.channel.sendEmbed(richEmbed);
-				return;
+			tipbot.wallet.GetBalance('misterdice', 6)
+				.then(balance => {
+					console.log(balance);
+					if(balance < value) {
+						var richEmbed = new Discord.RichEmbed()
+							.setDescription("Sorry, the bankroll is empty!")
+							.setColor(0x00AE86)
+							.setTimestamp();
+						msg.channel.sendEmbed(richEmbed);
+						return;
+					}
+				}
+				.catch(err => {
+					debug('ERROR: cannot check bankroll')
+					var richEmbed = new Discord.RichEmbed()
+						.setDescription("Oops something went wrong with checking the bankroll balance")
+						.setColor(0x00AE86)
+						.setTimestamp();
+					msg.channel.sendEmbed(richEmbed)
+					return;
+				})
 			}
 
 			if(!tipbot.wallet.checkBalance(bet, msg.author.id)) {
