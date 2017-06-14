@@ -114,7 +114,12 @@ var commands = {
 					debug('ERROR: cannot find a deposit address for \'' + user.username + '(' + user.id + ') : ' + err);
 				})
 
-			msg.channel.sendMessage( msg.author+" looking up deposit address!");
+			var msgText = msg.author+" looking up your deposit address! You will receive it in a DM."
+			var richEmbed = new Discord.RichEmbed()
+				.setDescription(msgText)
+				.setColor(0x00AE86)
+				.setTimestamp();
+			msg.channel.sendEmbed(richEmbed)
 		}
 	},
     "balance": {
@@ -191,7 +196,11 @@ var commands = {
         description: "Make an user happy with some Mooncoins",
         process: function(bot, msg, suffix) {
             if(!suffix){
-                msg.channel.sendMessage("Don't forget to include the user and tip amount!");
+				var richEmbed = new Discord.RichEmbed()
+					.setDescription("Don't forget to include the user and tip amount!")
+					.setColor(0x00AE86)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
                 return;
             }
 
@@ -200,7 +209,11 @@ var commands = {
             var args = suffix.split(' ');
 
             if(args.length < 2) {
-                msg.channel.sendMessage("Don't forget to include the user and tip amount!");
+				var richEmbed = new Discord.RichEmbed()
+					.setDescription("Don't forget to include the user and tip amount!")
+					.setColor(0x00AE86)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
                 return;
             }
 
@@ -217,8 +230,12 @@ var commands = {
             if(user.startsWith('<@')){
                 user = user.substr(2,user.length-3);
             } else {
-                msg.channel.sendMessage("Please input the username with the @ selector so we don't send your MoonCoins to the wrong guy!");
-                return;
+				var richEmbed = new Discord.RichEmbed()
+					.setDescription("Please input the username with the @ selector so we don't send your MoonCoins to the wrong guy!")
+					.setColor(0x00AE86)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
+				return;
             }
             console.log(user);
             if(user.startsWith('!')){
@@ -230,7 +247,11 @@ var commands = {
 
             console.log(mentioned);
             if(isNaN(amount)) {
-                msg.channel.sendMessage("Please enter the amount you want to tip " + mentioned.username);
+				var richEmbed = new Discord.RichEmbed()
+					.setDescription("Please enter the amount you want to tip " + mentioned.username)
+					.setColor(0x00AE86)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
                 return;
             }
 
@@ -248,7 +269,11 @@ var commands = {
                         	// msg.react(":money_mouth:");
                             // msg.react(":star2:");
                             // response in public channel:  announce tip
-                            msg.channel.sendMessage(responses.public);
+							var richEmbed = new Discord.RichEmbed()
+								.setDescription(responses.public)
+								.setColor(0x00AE86)
+								.setTimestamp();
+							msg.channel.sendEmbed(richEmbed)
                             // response to sender: send thanks and new balance
                             msg.author.sendMessage(responses.privateToSender);
                             // response to reciever:  inform of the tip
