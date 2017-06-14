@@ -383,10 +383,10 @@ function checkMessageForCommand(msg, isEdit) {
 							msg.channel.sendMessage(info);
 						} else {
 							var richEmbed = new Discord.RichEmbed()
-								.setDescription("Tipbot Info!")
+								.setDescription("So you want to tip other users? Awesome! Type !deposit to get a private deposit address to top up your tip wallet. Then, use '!tip @user [amount]' to make somebody happy! If you happen to receive a big ass tip from someone and you wanna cash it out; just use !withdraw.\n\nFurther info has been sent as a DM!")
 								.setColor(0x00AE86)
 								.setTimestamp();
-							msg.channel.sendEmbed(richEmbed, "'''\nSo you want to tip other users? Awesome! Type !deposit to get a private deposit address to top up your tip wallet. Then, use '!tip @user [amount]' to make somebody happy! If you happen to receive a big ass tip from someone and you wanna cash it out; just use !withdraw.\n\nFurther info has been sent as a DM!\n'''");
+							msg.channel.sendEmbed(richEmbed);
 							msg.author.sendMessage("**Available Commands:**").then(function(){
 								var batch = "";
 								var sortedCommands = Object.keys(commands).sort();
