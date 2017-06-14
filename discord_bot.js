@@ -246,7 +246,7 @@ var commands = {
 						msg.channel.sendEmbed(richEmbed);
 						return;
 					}
-				}
+				})
 				.catch(err => {
 					debug('ERROR: cannot check bankroll')
 					var richEmbed = new Discord.RichEmbed()
