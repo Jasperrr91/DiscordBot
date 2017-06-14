@@ -32,3 +32,4 @@ alias.json
 permissions.json
 messagebox.json
 config.json
+!/lib/wallet.js
