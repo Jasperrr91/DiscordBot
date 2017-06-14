@@ -238,7 +238,7 @@ var commands = {
 			var misterdice = {};
 			misterdice.id = 'misterdice';
 
-			tipbot.wallet.GetBalance(misterdice, 6)
+			tipbot.wallet.GetBalance(misterdice.id, 6)
 				.then(balance => {
 					console.log(balance);
 					if(balance < value) {
