@@ -247,6 +247,104 @@ var commands = {
 							.setTimestamp();
 						msg.channel.sendEmbed(richEmbed);
 						return;
+					} else {
+						tipbot.wallet.GetBalance(msg.author.id, 6)
+							.then(balance => {
+								if(balance < bet) {
+									var richEmbed = new Discord.RichEmbed()
+										.setDescription("Sorry, your balance is not sufficient!")
+										.setColor(0x00AE86)
+										.setTimestamp();
+									msg.channel.sendEmbed(richEmbed);
+									return;
+								} else {
+									var richEmbed = new Discord.RichEmbed()
+										.setDescription("Tossing the coin!")
+										.setColor(0x00AE86)
+										.setTimestamp();
+									msg.channel.sendEmbed(richEmbed);
+
+									var randomInt = Math.floor(Math.random() * 1000) + 1;
+									if(randomInt < 490) {
+										//WIN
+										tipbot.normalizeValue(bet, "mooncoin", misterdice)
+											.then(converted => {
+												// send amount (move between accounts in wallet)
+												console.log(msg.author.username + " won a bet of: " + bet);
+												tipbot.wallet.Move(msg.author, converted.newValue, misterdice)
+													.then(responses => {
+														var richEmbed = new Discord.RichEmbed()
+															.setDescription("The coin landed on **" + choice + "**\n\nCongratulations " + msg.author.username + ", you have just won **" + bet + " mooncoin**!")
+															.setColor(0x00AE86)
+															.setTimestamp();
+														msg.channel.sendEmbed(richEmbed);
+													})
+													.catch(err => {
+														debug('ERROR: cannot process bet')
+														// warn sender about the error
+														// response to sender: send thanks and new ballance
+														var richEmbed = new Discord.RichEmbed()
+															.setDescription("Oops something went wrong, no funds have been transferred!")
+															.setColor(0x00AE86)
+															.setTimestamp();
+														msg.channel.sendEmbed(richEmbed)
+														return;
+													})
+												})
+												.catch(errTxt => {
+														msg.channel.sendMessage(errTxt);
+													return;
+												})
+
+									} else {
+										// LOSE
+										if(choice == 'heads') {
+											var result = 'tails';
+										} else {
+											var result = 'heads';
+										}
+
+										tipbot.normalizeValue(bet, "mooncoin", msg.author)
+											.then(converted => {
+												// send amount (move between accounts in wallet)
+												console.log(msg.author.username + " lost a bet of: " + bet);
+												tipbot.wallet.Move(misterdice, converted.newValue, msg.author)
+													.then(responses => {
+														var richEmbed = new Discord.RichEmbed()
+															.setDescription("The coin landed on **" + result + "**\n\nSorry " + msg.author.username + ", you have lost **" + bet + " mooncoin**!")
+															.setColor(0x00AE86)
+															.setTimestamp();
+														msg.channel.sendEmbed(richEmbed);
+													})
+													.catch(err => {
+														debug('ERROR: cannot process bet')
+														// warn sender about the error
+														// response to sender: send thanks and new ballance
+														var richEmbed = new Discord.RichEmbed()
+															.setDescription("Oops something went wrong, no funds have been transferred!")
+															.setColor(0x00AE86)
+															.setTimestamp();
+														msg.channel.sendEmbed(richEmbed)
+														return;
+													})
+											})
+											.catch(errTxt => {
+												msg.channel.sendMessage(errTxt);
+											})
+									}
+									
+								}
+							})
+							.catch(err => {
+								console.log("FAAL")
+								debug('ERROR: cannot check user balance')
+								var richEmbed = new Discord.RichEmbed()
+									.setDescription("Oops something went wrong with checking your balance")
+									.setColor(0x00AE86)
+									.setTimestamp();
+								msg.channel.sendEmbed(richEmbed)
+								return;
+							})
 					}
 				})
 				.catch(err => {
@@ -259,103 +357,6 @@ var commands = {
 					msg.channel.sendEmbed(richEmbed)
 					return;
 				})
-
-			tipbot.wallet.GetBalance(msg.author.id, 6)
-				.then(balance => {
-					if(balance < bet) {
-						var richEmbed = new Discord.RichEmbed()
-							.setDescription("Sorry, your balance is not sufficient!")
-							.setColor(0x00AE86)
-							.setTimestamp();
-						msg.channel.sendEmbed(richEmbed);
-						return;
-					}
-				})
-				.catch(err => {
-					console.log("FAAL")
-					debug('ERROR: cannot check user balance')
-					var richEmbed = new Discord.RichEmbed()
-						.setDescription("Oops something went wrong with checking your balance")
-						.setColor(0x00AE86)
-						.setTimestamp();
-					msg.channel.sendEmbed(richEmbed)
-					return;
-				})
-
-			var richEmbed = new Discord.RichEmbed()
-				.setDescription("Tossing the coin!")
-				.setColor(0x00AE86)
-				.setTimestamp();
-			msg.channel.sendEmbed(richEmbed);
-
-			var randomInt = Math.floor(Math.random() * 1000) + 1;
-			if(randomInt < 490) {
-				//WIN
-				tipbot.normalizeValue(bet, "mooncoin", misterdice)
-					.then(converted => {
-					// send amount (move between accounts in wallet)
-						console.log(msg.author.username + " won a bet of: " + bet);
-						tipbot.wallet.Move(msg.author, converted.newValue, misterdice)
-							.then(responses => {
-								var richEmbed = new Discord.RichEmbed()
-									.setDescription("The coin landed on **" + choice + "**\n\nCongratulations " + msg.author.username + ", you have just won **" + bet + " mooncoin**!")
-									.setColor(0x00AE86)
-									.setTimestamp();
-								msg.channel.sendEmbed(richEmbed);
-							})
-							.catch(err => {
-								debug('ERROR: cannot process bet')
-								// warn sender about the error
-								// response to sender: send thanks and new ballance
-								var richEmbed = new Discord.RichEmbed()
-									.setDescription("Oops something went wrong, no funds have been transferred!")
-									.setColor(0x00AE86)
-									.setTimestamp();
-								msg.channel.sendEmbed(richEmbed)
-								return;
-							})
-					})
-					.catch(errTxt => {
-							msg.channel.sendMessage(errTxt);
-					})
-
-			} else {
-				// LOSE
-				if(choice == 'heads') {
-					var result = 'tails';
-				} else {
-					var result = 'heads';
-				}
-
-				tipbot.normalizeValue(bet, "mooncoin", msg.author)
-					.then(converted => {
-						// send amount (move between accounts in wallet)
-						console.log(msg.author.username + " lost a bet of: " + bet);
-						tipbot.wallet.Move(misterdice, converted.newValue, msg.author)
-							.then(responses => {
-								var richEmbed = new Discord.RichEmbed()
-									.setDescription("The coin landed on **" + result + "**\n\nSorry " + msg.author.username + ", you have lost **" + bet + " mooncoin**!")
-									.setColor(0x00AE86)
-									.setTimestamp();
-								msg.channel.sendEmbed(richEmbed);
-							})
-							.catch(err => {
-								debug('ERROR: cannot process bet')
-								// warn sender about the error
-								// response to sender: send thanks and new ballance
-								var richEmbed = new Discord.RichEmbed()
-									.setDescription("Oops something went wrong, no funds have been transferred!")
-									.setColor(0x00AE86)
-									.setTimestamp();
-								msg.channel.sendEmbed(richEmbed)
-								return;
-							})
-					})
-					.catch(errTxt => {
-							msg.channel.sendMessage(errTxt);
-					})
-			}
-
 		}
 	},
     "tip": {
