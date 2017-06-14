@@ -324,7 +324,7 @@ var commands = {
 			}
 
 		}
-	}
+	},
     "tip": {
         usage: "<user> <amount to tip>",
         description: "Make an user happy with some Mooncoins",
