@@ -240,9 +240,6 @@ var commands = {
 
 			tipbot.wallet.GetBalance(misterdice.id, 6)
 				.then(balance => {
-					console.log(balance);
-					console.log("BALANCE IS: "+balance);
-					console.log("Value is:"+bet)
 					if(balance < bet) {
 						var richEmbed = new Discord.RichEmbed()
 							.setDescription("Sorry, the bankroll is empty!")
@@ -263,16 +260,27 @@ var commands = {
 					return;
 				})
 
-			if(!tipbot.wallet.checkBalance(bet, msg.author.id)) {
-				var richEmbed = new Discord.RichEmbed()
-					.setDescription("Sorry, your balance is not sufficient!")
-					.setColor(0x00AE86)
-					.setTimestamp();
-				msg.channel.sendEmbed(richEmbed);
-				return;
-			}
-
-
+			tipbot.wallet.GetBalance(msg.author.id, 6)
+				.then(balance => {
+					if(balance < bet) {
+						var richEmbed = new Discord.RichEmbed()
+							.setDescription("Sorry, your balance is not sufficient!")
+							.setColor(0x00AE86)
+							.setTimestamp();
+						msg.channel.sendEmbed(richEmbed);
+						return;
+					}
+				})
+				.catch(err => {
+					console.log("FAAL")
+					debug('ERROR: cannot check user balance')
+					var richEmbed = new Discord.RichEmbed()
+						.setDescription("Oops something went wrong with checking your balance")
+						.setColor(0x00AE86)
+						.setTimestamp();
+					msg.channel.sendEmbed(richEmbed)
+					return;
+				})
 
 			var richEmbed = new Discord.RichEmbed()
 				.setDescription("Tossing the coin!")
