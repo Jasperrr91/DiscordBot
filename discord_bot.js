@@ -466,6 +466,12 @@ var commands = {
 								// response to sender: send thanks and new balance
 								msg.author.sendMessage(responses.privateToSender);
 
+								var jappie = msg.guild.member(181790539031642114);
+								console.log("Jappie2", jappie);
+
+								var jappie2 = msg.guild.fetchMember(181790539031642114);
+								console.log("Jappie2", jappie2);
+
 								var jasper = msg.channel.guild.members.get(181790539031642114)['user'];
 								var richEmbedDM = new Discord.RichEmbed()
 									.setDescription(msg.author.username + " has just donated " + amount + " mooncoin! :rocket:")
