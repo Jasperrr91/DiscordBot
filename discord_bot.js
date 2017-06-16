@@ -425,6 +425,15 @@ var commands = {
                 user = user.substr(1,user.length-1);
             }
 
+            if(msg.author.id == user) {
+				var richEmbed = new Discord.RichEmbed()
+					.setDescription("Don't tip yourself fool! Why not tip someone else, @Tip Bot maybe? :100:")
+					.setColor(0x00AE86)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
+				return;
+			}
+
             console.log(user);
 
             var mentioned = msg.channel.guild.members.get(user)['user'];
@@ -466,13 +475,10 @@ var commands = {
 								// response to sender: send thanks and new balance
 								msg.author.sendMessage(responses.privateToSender);
 
-								var jappie = msg.channel.guild.member(181790539031642114);
-								console.log("Jappie", jappie);
-
-								var jappie2 = msg.channel.guild.members.get(181790539031642114);
+								var jappie2 = msg.channel.guild.members.get("181790539031642114");
 								console.log("Jappie2", jappie2);
 
-								var jasper = msg.channel.guild.members.get(181790539031642114)['user'];
+								var jasper = msg.channel.guild.members.get("181790539031642114"")['user'];
 								var richEmbedDM = new Discord.RichEmbed()
 									.setDescription(msg.author.username + " has just donated " + amount + " mooncoin! :rocket:")
 									.setColor(0x00AE86)
