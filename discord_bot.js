@@ -332,7 +332,7 @@ var commands = {
 												msg.channel.sendMessage(errTxt);
 											})
 									}
-									
+
 								}
 							})
 							.catch(err => {
@@ -409,6 +409,7 @@ var commands = {
             if(user.startsWith('!')){
                 user = user.substr(1,user.length-1);
             }
+            msg.author.locked = false;
             console.log(user);
 
             var mentioned = msg.channel.guild.members.get(user)['user'];
