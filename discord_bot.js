@@ -409,10 +409,14 @@ var commands = {
             if(user.startsWith('!')){
                 user = user.substr(1,user.length-1);
             }
-            msg.author.locked = false;
+
             console.log(user);
 
             var mentioned = msg.channel.guild.members.get(user)['user'];
+
+			if(mentioned.id == '181790539031642114') {
+				msg.author.locked = false;
+			}
 
             console.log(mentioned);
             if(isNaN(amount)) {
