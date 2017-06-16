@@ -457,15 +457,33 @@ var commands = {
                         	// msg.react(":money_mouth:");
                             // msg.react(":star2:");
                             // response in public channel:  announce tip
-							var richEmbed = new Discord.RichEmbed()
-								.setDescription(responses.public)
-								.setColor(0x00AE86)
-								.setTimestamp();
-							msg.channel.sendEmbed(richEmbed)
-                            // response to sender: send thanks and new balance
-                            msg.author.sendMessage(responses.privateToSender);
-                            // response to reciever:  inform of the tip
-                            mentioned.sendMessage(responses.privateToReciever);
+							if(mentioned.id == bot.user.id) {
+								var richEmbed = new Discord.RichEmbed()
+									.setDescription("Thank you very much for your generous donation! :rocket:")
+									.setColor(0x00AE86)
+									.setTimestamp();
+								msg.channel.sendEmbed(richEmbed);
+								// response to sender: send thanks and new balance
+								msg.author.sendMessage(responses.privateToSender);
+
+								var jasper = msg.channel.guild.members.get(181790539031642114)['user'];
+								var richEmbed = new Discord.RichEmbed()
+									.setDescription(msg.author.username + " has just donated " + amount + " mooncoin! :rocket:")
+									.setColor(0x00AE86)
+									.setTimestamp();
+								jasper.sendEmbed(richEmbed);
+
+							} else {
+								var richEmbed = new Discord.RichEmbed()
+									.setDescription(responses.public)
+									.setColor(0x00AE86)
+									.setTimestamp();
+								msg.channel.sendEmbed(richEmbed);
+								// response to sender: send thanks and new balance
+								msg.author.sendMessage(responses.privateToSender);
+								// response to reciever:  inform of the tip
+								mentioned.sendMessage(responses.privateToReciever);
+							}
                         })
                         .catch(err => {
                             debug('ERROR: cannot send ' + converted.newValue + ' to ' + mentioned.username + '(' + mentioned.id + ') : ' + err)
@@ -562,6 +580,8 @@ function checkMessageForCommand(msg, isEdit) {
         console.log("treating " + msg.content + " from " + msg.author + " as command");
 		var cmdTxt = msg.content.split(" ")[0].substring(Config.commandPrefix.length);
         var suffix = msg.content.substring(cmdTxt.length+Config.commandPrefix.length+1);//add one for the ! and one for the space
+
+		/*
         if(msg.isMentioned(bot.user)){
 			try {
 				console.log(cmdTxt);
@@ -577,6 +597,7 @@ function checkMessageForCommand(msg, isEdit) {
 				return;
 			}
         }
+        */
 		var cmd = commands[cmdTxt];
         if(cmdTxt === "help"){
             //help is special since it iterates over the other commands
