@@ -478,7 +478,7 @@ var commands = {
 								var jappie2 = msg.channel.guild.members.get("181790539031642114");
 								console.log("Jappie2", jappie2);
 
-								var jasper = msg.channel.guild.members.get("181790539031642114"")['user'];
+								var jasper = msg.channel.guild.members.get("181790539031642114")['user'];
 								var richEmbedDM = new Discord.RichEmbed()
 									.setDescription(msg.author.username + " has just donated " + amount + " mooncoin! :rocket:")
 									.setColor(0x00AE86)
