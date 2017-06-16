@@ -467,11 +467,11 @@ var commands = {
 								msg.author.sendMessage(responses.privateToSender);
 
 								var jasper = msg.channel.guild.members.get(181790539031642114)['user'];
-								var richEmbed = new Discord.RichEmbed()
+								var richEmbedDM = new Discord.RichEmbed()
 									.setDescription(msg.author.username + " has just donated " + amount + " mooncoin! :rocket:")
 									.setColor(0x00AE86)
 									.setTimestamp();
-								jasper.sendEmbed(richEmbed);
+								jasper.sendEmbed(richEmbedDM);
 
 							} else {
 								var richEmbed = new Discord.RichEmbed()
