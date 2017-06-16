@@ -37,6 +37,17 @@ try {
 console.log("Starting DiscordBot\nNode version: " + process.version + "\nDiscord.js version: " + Discord.version);
 
 
+convertNumber = function (input) {
+	if(input == ":100:") {
+		return 100;
+	}
+
+
+
+	return input;
+}
+
+
 
 // Get authentication data
 try {
@@ -207,6 +218,8 @@ var commands = {
 			var args = suffix.split(' ');
 			var choice = args.shift();
 			var bet = args.shift();
+
+			bet = convertNumber(bet);
 
 			if(choice != "heads" && choice != "tails") {
 				var richEmbed = new Discord.RichEmbed()
@@ -392,6 +405,8 @@ var commands = {
 				amount = args.shift();
 			}
 
+			amount = convertNumber(amount);
+
 
             console.log(user);
 
@@ -551,6 +566,8 @@ function checkMessageForCommand(msg, isEdit) {
 			try {
 				cmdTxt = msg.content.split(" ")[1];
 				suffix = msg.content.substring(bot.user.mention().length+cmdTxt.length+Config.commandPrefix.length+1);
+				console.log(cmdTxt);
+				console.log(suffix);
 			} catch(e){ //no command
 				msg.channel.sendMessage("Yes?");
 				return;
