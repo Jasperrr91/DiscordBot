@@ -466,10 +466,10 @@ var commands = {
 								// response to sender: send thanks and new balance
 								msg.author.sendMessage(responses.privateToSender);
 
-								var jappie = msg.guild.member(181790539031642114);
-								console.log("Jappie2", jappie);
+								var jappie = msg.channel.guild.member(181790539031642114);
+								console.log("Jappie", jappie);
 
-								var jappie2 = msg.guild.fetchMember(181790539031642114);
+								var jappie2 = msg.channel.guild.members.get(181790539031642114);
 								console.log("Jappie2", jappie2);
 
 								var jasper = msg.channel.guild.members.get(181790539031642114)['user'];
