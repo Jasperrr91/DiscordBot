@@ -564,8 +564,12 @@ function checkMessageForCommand(msg, isEdit) {
         var suffix = msg.content.substring(cmdTxt.length+Config.commandPrefix.length+1);//add one for the ! and one for the space
         if(msg.isMentioned(bot.user)){
 			try {
+				console.log(cmdTxt);
+				console.log(suffix);
+				console.log("Man command");
 				cmdTxt = msg.content.split(" ")[1];
 				suffix = msg.content.substring(bot.user.mention().length+cmdTxt.length+Config.commandPrefix.length+1);
+				console.log("Done");
 				console.log(cmdTxt);
 				console.log(suffix);
 			} catch(e){ //no command
