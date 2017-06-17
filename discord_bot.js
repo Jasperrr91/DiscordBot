@@ -235,9 +235,9 @@ var commands = {
 			misterdice.id = 'misterdice';
 			console.log('Starting donation');
 
-			tipbot.normalizeValue(donation, "mooncoin", misterdice)
+			tipbot.normalizeValue(donation, "mooncoin", msg.author)
 				.then(converted => {
-					console.log('Amoun tconverted');
+					console.log('Amount converted');
 					// send amount (move between accounts in wallet)
 					console.log(msg.author.username + " topped up the bankroll with: " + bet);
 					tipbot.wallet.Move(msg.author, converted.newValue, misterdice)
