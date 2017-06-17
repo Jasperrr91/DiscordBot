@@ -241,7 +241,7 @@ var commands = {
 					tipbot.wallet.Move(misterdice, converted.newValue, msg.author)
 						.then(responses => {
 							var richEmbed = new Discord.RichEmbed()
-								.setDescription("Thank you very much for your generous donation! :rocket:")
+								.setDescription("Thank you very much for your generous donation to the bankroll! :game_die:")
 								.setColor(0x00AE86)
 								.setTimestamp();
 							msg.channel.sendEmbed(richEmbed);
