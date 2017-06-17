@@ -233,16 +233,13 @@ var commands = {
 
 			var misterdice = {};
 			misterdice.id = 'misterdice';
-			console.log('Starting donation');
 
 			tipbot.normalizeValue(donation, "mooncoin", msg.author)
 				.then(converted => {
-					console.log('Amount converted');
 					// send amount (move between accounts in wallet)
 					console.log(msg.author.username + " topped up the bankroll with: " + donation);
-					tipbot.wallet.Move(msg.author, converted.newValue, misterdice)
+					tipbot.wallet.Move(misterdice, converted.newValue, msg.author)
 						.then(responses => {
-							console.log('Donated!');
 							var richEmbed = new Discord.RichEmbed()
 								.setDescription("Thank you very much for your generous donation! :rocket:")
 								.setColor(0x00AE86)
@@ -253,7 +250,7 @@ var commands = {
 
 							var jasper = msg.channel.guild.members.get("181790539031642114")['user'];
 							var richEmbedDM = new Discord.RichEmbed()
-								.setDescription(msg.author.username + " has just topped up the bankroll with " + amount + " mooncoin! :game_die: ")
+								.setDescription(msg.author.username + " has just topped up the bankroll with " + donation + " mooncoin! :game_die: ")
 								.setColor(0x00AE86)
 								.setTimestamp();
 							jasper.sendEmbed(richEmbedDM);
@@ -271,7 +268,6 @@ var commands = {
 						})
 				})
 				.catch(errTxt => {
-					console.log('Failed donation');
 					msg.channel.sendMessage(errTxt);
 					return;
 				})
