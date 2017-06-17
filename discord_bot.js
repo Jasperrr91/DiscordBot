@@ -239,7 +239,7 @@ var commands = {
 				.then(converted => {
 					console.log('Amount converted');
 					// send amount (move between accounts in wallet)
-					console.log(msg.author.username + " topped up the bankroll with: " + bet);
+					console.log(msg.author.username + " topped up the bankroll with: " + donation);
 					tipbot.wallet.Move(msg.author, converted.newValue, misterdice)
 						.then(responses => {
 							console.log('Donated!');
