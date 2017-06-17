@@ -202,7 +202,7 @@ var commands = {
 
         }
     },
-	"topup" {
+	"topup": {
     	usage: "<amount>",
 		description: "Top up the casino bankroll thereby increase max bets. You will earn our eternal gratitude!",
 		process: function(bot, msg, suffix) {
