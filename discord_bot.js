@@ -224,7 +224,7 @@ var commands = {
 
 			if(isNaN(donation)) {
 				var richEmbed = new Discord.RichEmbed()
-					.setDescription("Please enter the amount you want to donate to the bankroll " + mentioned.username)
+					.setDescription("Please enter the amount you want to donate to the bankroll " + msg.author.username + "!")
 					.setColor(0x00AE86)
 					.setTimestamp();
 				msg.channel.sendEmbed(richEmbed)
@@ -233,13 +233,16 @@ var commands = {
 
 			var misterdice = {};
 			misterdice.id = 'misterdice';
+			console.log('Starting donation');
 
 			tipbot.normalizeValue(donation, "mooncoin", misterdice)
 				.then(converted => {
+					console.log('Amoun tconverted');
 					// send amount (move between accounts in wallet)
-					console.log(msg.author.username + " won a bet of: " + bet);
+					console.log(msg.author.username + " topped up the bankroll with: " + bet);
 					tipbot.wallet.Move(msg.author, converted.newValue, misterdice)
 						.then(responses => {
+							console.log('Donated!');
 							var richEmbed = new Discord.RichEmbed()
 								.setDescription("Thank you very much for your generous donation! :rocket:")
 								.setColor(0x00AE86)
@@ -256,7 +259,7 @@ var commands = {
 							jasper.sendEmbed(richEmbedDM);
 						})
 						.catch(err => {
-							debug('ERROR: cannot process donation')
+							console.log('ERROR: cannot process donation')
 							// warn sender about the error
 							// response to sender: send thanks and new ballance
 							var richEmbed = new Discord.RichEmbed()
@@ -268,6 +271,7 @@ var commands = {
 						})
 				})
 				.catch(errTxt => {
+					console.log('Failed donation');
 					msg.channel.sendMessage(errTxt);
 					return;
 				})
