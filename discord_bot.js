@@ -206,7 +206,7 @@ var commands = {
 	"value": {
     	usage: "<amount>",
 		description: "Returns the value for the given amount of Mooncoins",
-		process: function(bot, msg_ suffix) {
+		process: function(bot, msg, suffix) {
 			if(!suffix){
 				var richEmbed = new Discord.RichEmbed()
 					.setDescription("Yea I can't process that. Please include the amount of Moon you want to value.")
