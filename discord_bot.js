@@ -13,6 +13,7 @@ const RPC_PORT = argv['rpc-port'] || process.env.TIPBOT_RPC_PORT || 9998
 const WALLET_PASSW = argv['wallet-password'] || process.env.TIPBOT_WALLET_PASSWORD
 
 const base58check = require('base58check')
+const request = require('request')
 
 assert(RPC_USER, '--rpc-user or TIPBOT_RPC_USER is required')
 assert(RPC_PASSWORD, '--rpc-password or TIPBOT_RPC_PASSWORD is required')
@@ -202,6 +203,58 @@ var commands = {
 
         }
     },
+	"value": {
+    	usage: "<amount>",
+		description: "Returns the value for the given amount of Mooncoins",
+		process: function(bot, msg_ suffix) {
+			if(!suffix){
+				var richEmbed = new Discord.RichEmbed()
+					.setDescription("Yea I can't process that. Please include the amount of Moon you want to value.")
+					.setColor(0xE74C3C)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
+				return;
+			}
+
+			var args = suffix.split(' ');
+			var mooncoins = args.shift();
+
+			if(donation == '') {
+				mooncoins = args.shift();
+			}
+
+			if(isNaN(mooncoins)) {
+				var richEmbed = new Discord.RichEmbed()
+					.setDescription("I'm not gonna value that.")
+					.setColor(0xE74C3C)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
+				return;
+			}
+
+			request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {
+				var prices = JSON.parse(body);
+				var usd = prices[0].price_usd * mooncoins;
+				var eur = prices[0].price_eur * mooncoins;
+				var btc = prices[0].price_btc * mooncoins;
+				var responseMsg = "**USD**: $" + usd + "\n";
+				responseMsg += "**EUR**: €" + eur + "\n";
+				responseMsg += "**BTC**: ฿" + btc;
+
+				var richEmbed = new Discord.RichEmbed()
+					.setThumbnail("http://i.imgur.com/75d8dQt.png")
+					.setURL("https://coinmarketcap.com/currencies/mooncoin/")
+					.setTitle("CoinMarketCap")
+					.setDescription(responseMsg)
+					.setColor(0xF1C40F)
+					.setTimestamp();
+				msg.channel.sendEmbed(richEmbed)
+				return;
+			})
+
+
+		}
+	},
 	"topup": {
     	usage: "<amount>",
 		description: "Top up the casino bankroll thereby increase max bets. You will earn our eternal gratitude!",
