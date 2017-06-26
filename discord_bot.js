@@ -219,7 +219,7 @@ var commands = {
 			var args = suffix.split(' ');
 			var mooncoins = args.shift();
 
-			if(donation == '') {
+			if(mooncoins == '') {
 				mooncoins = args.shift();
 			}
 
