@@ -234,17 +234,16 @@ var commands = {
 
 			request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {
 				var prices = JSON.parse(body);
-				var usd = prices[0].price_usd * mooncoins;
-				var eur = prices[0].price_eur * mooncoins;
-				var btc = prices[0].price_btc * mooncoins;
-				var responseMsg = "**USD**: $" + usd + "\n";
-				responseMsg += "**EUR**: €" + eur + "\n";
-				responseMsg += "**BTC**: ฿" + btc;
+				var usd = (prices[0].price_usd * mooncoins).toFixed(2);
+				var eur = (prices[0].price_eur * mooncoins).toFixed(2);
+				var btc = (prices[0].price_btc * mooncoins).toFixed(8);
+				var responseMsg = "**USD**: \t$" + usd + "\n";
+				responseMsg += "**EUR**: \t€" + eur + "\n";
+				responseMsg += "**BTC**: \t฿" + btc;
 
 				var richEmbed = new Discord.RichEmbed()
 					.setThumbnail("http://i.imgur.com/75d8dQt.png")
-					.setURL("https://coinmarketcap.com/currencies/mooncoin/")
-					.setTitle("CoinMarketCap")
+					.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
 					.setDescription(responseMsg)
 					.setColor(0xF1C40F)
 					.setTimestamp();
