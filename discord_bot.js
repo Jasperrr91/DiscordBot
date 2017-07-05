@@ -253,6 +253,8 @@ var commands = {
 			var valueEmbed
 			var valueReady = false;
 
+			var cmc = api.getCMC();
+
 			var cmc = api.coinmarketcap();
 			console.log('got data, sending embed');
 			valueEmbed = new Discord.RichEmbed()
