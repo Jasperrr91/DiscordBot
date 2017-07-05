@@ -253,10 +253,6 @@ var commands = {
 			var valueEmbed
 			var valueReady = false;
 
-			var cmc = api.getCMC();
-
-
-
 			api.getCMC()
 				.then(response => {
 					var cmc = response;
@@ -272,46 +268,6 @@ var commands = {
 				.catch(err => {
 					//
 				})
-
-			console.log("CMC is", cmc);
-
-			// var cmc = api.coinmarketcap();
-			console.log('got data, sending embed');
-			valueEmbed = new Discord.RichEmbed()
-				.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
-				// .setDescription(responseMsg)
-				.setColor(0xF1C40F)
-				.setTimestamp();
-			valueEmbed.addField("Values", cmc.valueResponse, true);
-			valueEmbed.addField("Cap", cmc.valueCap, true);
-			msg.channel.sendEmbed(valueEmbed);
-            //
-			// request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {
-			// 	var prices = JSON.parse(body);
-			// 	var usd = (prices[0].price_usd * 1).toFixed(2);
-			// 	var eur = (prices[0].price_eur * 1).toFixed(2);
-			// 	var btc = (prices[0].price_btc * 1).toFixed(8);
-			// 	var valueResponse = "**USD**: \t$" + usd + "\n";
-			// 	valueResponse += "**EUR**: \t€" + eur + "\n";
-			// 	valueResponse += "**BTC**: \t฿" + btc;
-            //
-			// 	var usd24h = (prices[0]["24h_volume_usd"] * 1).toFixed(2);
-			// 	var btc24h = (usd24h/usd*btc).toFixed(2);
-            //
-			// 	var valueCap = "Rank: " + prices[0].rank + "\n";
-			// 	valueCap += "24H: $" + usd24h + "\n";
-			// 	valueCap += "24H: " + btc24h + " BTC";
-            //
-			// 	valueEmbed = new Discord.RichEmbed()
-			// 		.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
-			// 		// .setDescription(responseMsg)
-			// 		.setColor(0xF1C40F)
-			// 		.setTimestamp();
-			// 	valueEmbed.addField("Values", valueResponse, true);
-			// 	valueEmbed.addField("Cap", valueCap, true);
-			// 	msg.channel.sendEmbed(valueEmbed);
-            //
-			// })
 
 			return;
 		}
