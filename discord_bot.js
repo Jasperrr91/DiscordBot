@@ -246,10 +246,7 @@ var commands = {
 		usage: "",
 		description: "Returns the market information for Bleutrade",
 		process: function(bot, msg, suffix) {
-			var valueResponse;
-			var bleuResponse;
-			var ccexResponse;
-			var novaResponse;
+			var valueEmbed
 
 			request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {
 				var prices = JSON.parse(body);
@@ -267,7 +264,7 @@ var commands = {
 				valueCap += "24H: $" + prices[0].rank + "\n";
 				valueCap += "24H: " + prices[0].rank + " BTC";
 
-				var valueEmbed = new Discord.RichEmbed()
+				valueEmbed = new Discord.RichEmbed()
 					.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
 					// .setDescription(responseMsg)
 					.setColor(0xF1C40F)
