@@ -71,7 +71,7 @@ let requestApi = function() {
                             var lastTradesTotal = 0;
                             var lastTradesDuration = 0;
 
-                            for (i = 0; i < history.result.length; ++i) {
+                            for (var i = 0; i < history.result.length; ++i) {
                                 if((Date.parse(history.result[i].TimeStamp) + 3600 * 1000) > Date.now()){
                                     if(history.result[i].OrderType == "BUY") {
                                         lastHourBuyCount++;
