@@ -260,6 +260,14 @@ var commands = {
 			api.getCMC()
 				.then(response => {
 					var cmc = response;
+					valueEmbed = new Discord.RichEmbed()
+						.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
+						// .setDescription(responseMsg)
+						.setColor(0xF1C40F)
+						.setTimestamp();
+					valueEmbed.addField("Values", cmc.valueResponse, true);
+					valueEmbed.addField("Cap", cmc.valueCap, true);
+					msg.channel.sendEmbed(valueEmbed);
 				})
 				.catch(err => {
 					//
