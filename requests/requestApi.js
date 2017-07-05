@@ -20,6 +20,7 @@ let requestApi = function() {
         if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
             return new Promise(
                 (resolve, reject) => {
+                    console.log('returning from cache');
                     resolve(self.bleuLastResponse);
                 });
         }
@@ -32,9 +33,8 @@ let requestApi = function() {
         return new Promise(
             (resolve, reject) => {
                 request.get('https://bleutrade.com/api/v2/public/getmarketsummary?market=MOON_BTC', function (err, response, body) {
-                console.log("Got 1");
+                console.log("updating cache");
                     request.get('https://bleutrade.com/api/v2/public/getorderbook?market=MOON_BTC&type=ALL&depth=1', function (err2, response2, body2) {
-                        console.log("Got 2");
                         var summary = JSON.parse(body);
 
                         var avgPrice = (summary.result[0].Average * 100000000).toFixed(0);
@@ -50,7 +50,6 @@ let requestApi = function() {
                         var sellPrice = orderBook.result.sell[0].Rate * 100000000;
                         wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
                         wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
-                        console.log("Making response");
 
                         var response = {};
                         response.value = valueResponse;
@@ -58,6 +57,7 @@ let requestApi = function() {
                         response.wall = wallResponse;
                         console.log(response);
                         self.bleuLastResponse = response;
+                        self.bleuLastUpdate = Date.now();
 
                         resolve(response);
                     })

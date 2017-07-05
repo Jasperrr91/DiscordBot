@@ -211,12 +211,8 @@ var commands = {
     	usage: "",
 		description: "Returns the market information for Bleutrade",
 		process: function(bot, msg, suffix) {
-    		console.log("Get bleu");
-
 			api.getBleu()
 				.then(response => {
-					console.log("Got response");
-					console.log(response);
 					var bleu = response;
 					valueEmbed = new Discord.RichEmbed()
 						.setAuthor("B L E U T R A D E", "https://i1.wp.com/bitcoinexchangelist.com/wp-content/uploads/2016/12/ethereum-exchanges-list-bleutrade-logo.png", "https://bleutrade.com/exchange/MOON/BTC")
