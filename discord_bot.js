@@ -255,7 +255,9 @@ var commands = {
 
 			var cmc = api.getCMC();
 
-			var cmc = api.coinmarketcap();
+			console.log("CMC is", cmc);
+
+			// var cmc = api.coinmarketcap();
 			console.log('got data, sending embed');
 			valueEmbed = new Discord.RichEmbed()
 				.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
