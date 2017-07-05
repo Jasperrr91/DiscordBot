@@ -276,7 +276,13 @@ var commands = {
 				valueEmbed.addField("Cap", valueCap, true);
 			})
 
-			msg.channel.sendEmbed(valueEmbed);
+			while(true) {
+				if(valueEmbed) {
+					msg.channel.sendEmbed(valueEmbed);
+					return;
+				}
+
+			}
 			return;
 		}
 	},
