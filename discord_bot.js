@@ -207,7 +207,7 @@ var commands = {
 
         }
     },
-	"blue": {
+	"bleu": {
     	usage: "",
 		description: "Returns the market information for Bleutrade",
 		process: function(bot, msg, suffix) {
