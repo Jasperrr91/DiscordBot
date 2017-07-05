@@ -238,13 +238,35 @@ var commands = {
 		usage: "",
 		description: "Returns the market information for C-CEX",
 		process: function(bot, msg, suffix) {
-			var richEmbed = new Discord.RichEmbed()
-				.setAuthor("C - C E X E X C H A N G E", "https://c-cex.com/favicon.ico?v=2", "https://c-cex.com/?p=moon-btc")
-				.setDescription(responseMsg)
-				.setColor(0xF1C40F)
-				.setTimestamp();
-			msg.channel.sendEmbed(richEmbed)
+			api.getCcex()
+				.then(response => {
+					var ccex = response;
+					valueEmbed = new Discord.RichEmbed()
+						.setAuthor("C - C E X E X C H A N G E", "https://c-cex.com/favicon.ico?v=2", "https://c-cex.com/?p=moon-btc")
+						// .setDescription(responseMsg)
+						.setColor(0xF1C40F)
+						.setTimestamp();
+					valueEmbed.addField("Value", ccex.value, true);
+					valueEmbed.addField("24H Volume", ccex.volume, true);
+					valueEmbed.addField("Last 100 trades", ccex.trade, true);
+					valueEmbed.addField("Last hour", ccex.hour, true);
+					valueEmbed.addField("Walls", ccex.wall, true);
+					msg.channel.sendEmbed(valueEmbed);
+				})
+					.catch(err => {
+						console.log("Got error");
+				})
+
 			return;
+
+			//
+			// var richEmbed = new Discord.RichEmbed()
+			// 	.setAuthor("C - C E X E X C H A N G E", "https://c-cex.com/favicon.ico?v=2", "https://c-cex.com/?p=moon-btc")
+			// 	.setDescription(responseMsg)
+			// 	.setColor(0xF1C40F)
+			// 	.setTimestamp();
+			// msg.channel.sendEmbed(richEmbed)
+			// return;
 		}
 	},
 	"nova": {

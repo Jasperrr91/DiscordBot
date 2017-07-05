@@ -126,9 +126,9 @@ let requestApi = function() {
 
         return new Promise(
                 (resolve, reject) => {
-                if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
+                if (Date.now() < (self.ccexLastUpdate + 300*1000)) {
             console.log('returning from cache');
-            resolve(self.bleuLastResponse);
+            resolve(self.ccexLastResponse);
             return;
         }
 
@@ -138,14 +138,17 @@ let requestApi = function() {
                     request.get('https://c-cex.com/t/api_pub.html?a=getmarkethistory&market=moon-btc&count=100', function (volumeErr, volumeResponse, volumeBody) {
                         var summary = JSON.parse(summaryBody);
 
+                        console.log("Setting value");
                         //Value
                         var avgPrice = (summary.ticker.avg * 100000000).toFixed(0);
                         valueResponse = avgPrice + " Satoshi";
 
+                        console.log("Setting volume");
                         //Volume
                         var volume = JSON.parse(volumeBody);
                         volumeResponse = parseFloat(volume.moon.vol).toFixed(2) + " BTC";
 
+                        console.log("Setting walls");
                         //Walls
                         var orderBook = JSON.parse(orderBookBody);
                         var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
@@ -165,6 +168,8 @@ let requestApi = function() {
                         var lastTradesTotal = 0;
                         var lastTradesDuration = 0;
 
+                        console.log("Processing trades");
+
                         for (var i = 0; i < history.result.length; ++i) {
                             if ((Date.parse(history.result[i].TimeStamp) + 3600 * 1000) > Date.now()) {
                                 if (history.result[i].OrderType == "BUY") {
@@ -181,12 +186,15 @@ let requestApi = function() {
 
                         lastTradesDuration = (Date.parse(history.result[0].TimeStamp) - Date.parse(history.result[history.result.length - 1].TimeStamp)) / 1000;
 
+                        console.log("Setting trades");
                         //Trades
                         console.log("Duration: " + lastTradesDuration);
                         var durationString = moment.duration(lastTradesDuration, "seconds").format("h:mm:ss");
 
                         tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
                         tradeResponse += "Duration: " + durationString;
+
+                        console.log("Setting hours");
 
                         //Last Hour
                         hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
@@ -201,8 +209,8 @@ let requestApi = function() {
                         console.log(response);
 
                         console.log("updating cache");
-                        self.bleuLastResponse = response;
-                        self.bleuLastUpdate = Date.now();
+                        self.ccexLastResponse = response;
+                        self.ccexLastUpdate = Date.now();
 
                         resolve(response);
                     })
