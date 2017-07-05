@@ -17,14 +17,6 @@ let requestApi = function() {
     self.valueLastResponse = {};
 
     self.getBleu = function() {
-        // if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
-        //     return new Promise(
-        //         (resolve, reject) => {
-        //             console.log('returning from cache');
-        //             resolve(self.bleuLastResponse);
-        //         });
-        // }
-
         var valueResponse;
         var volumeResponse;
         var wallResponse;
@@ -237,6 +229,101 @@ let requestApi = function() {
         })
     })
     }
+
+    //
+    self.getNova = function() {
+        var valueResponse;
+        var volumeResponse;
+        var wallResponse;
+        var tradeResponse;
+        var hourResponse;
+
+        return new Promise(
+                (resolve, reject) => {
+                if (Date.now() < (self.novaLastUpdate + 300*1000)) {
+            console.log('returning from cache');
+            resolve(self.novaLastResponse);
+            return;
+        }
+
+        request.get('https://novaexchange.com/remote/v2/market/info/BTC_MOON/', function (summaryErr, summaryResponse, summaryBody) {
+            request.get('https://novaexchange.com/remote/v2/market/openorders/BTC_MOON/BOTH/', function (orderBookErr, orderBookResponse, orderBookBody) {
+                request.get('https://novaexchange.com/remote/v2/market/orderhistory/BTC_MOON/', function (historyErr, historyResponse, historyBody) {
+                    var summary = JSON.parse(summaryBody);
+
+                    //Value
+                    var avgPrice = (summary.markets[0].last_price * 100000000).toFixed(0);
+                    valueResponse = avgPrice + " Satoshi";
+
+                    //Volume
+                    var avgPrice = parseFloat(summary.markets[0].volume24h).toFixed(2);
+                    volumeResponse = avgPrice + " BTC";
+
+                    //Walls
+                    var orderBook = JSON.parse(orderBookBody);
+                    var buyWall = parseFloat(orderBook.buyorders[0].baseamount).toFixed(2);
+                    var sellWall = parseFloat(orderBook.sellorders[0].baseamount).toFixed(2);
+                    var buyPrice = parseFloat(orderBook.buyorders[0].price) * 100000000;
+                    var sellPrice = parseFloat(orderBook.sellorders[0].price) * 100000000;
+                    wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
+                    wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
+
+                    //Trades + Hours
+                    var history = JSON.parse(historyBody);
+                    var lastHourBuyCount = 0;
+                    var lastHourSellCount = 0;
+                    var lastHourBuyVolume = 0;
+                    var lastHourSellVolume = 0;
+
+                    var lastTradesTotal = 0;
+                    var lastTradesDuration = 0;
+
+                    for (var i = 0; i < history.items.length; ++i) {
+                        if((Date.parse(history.items[i].datestamp) + 3600 * 1000) > Date.now()){
+                            if(history.items[i].tradetype == "BUY") {
+                                lastHourBuyCount++;
+                                lastHourBuyVolume += parseFloat(history.items[i].baseamount);
+                            } else if(history.items[i].tradetype == "SELL") {
+                                lastHourSellCount++;
+                                lastHourSellVolume += parseFloat(history.items[i].baseamount);
+                            }
+                        }
+
+                        lastTradesTotal += parseFloat(history.items[i].baseamount);
+                    }
+
+                    lastTradesDuration = (Date.parse(history.items[0].datestamp) - Date.parse(history.result[history.items.length - 1].datestamp))/1000;
+
+                    //Trades
+                    console.log("Duration: " + lastTradesDuration);
+                    var durationString = moment.duration(lastTradesDuration, "seconds").format("h:mm:ss");
+
+                    tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
+                    tradeResponse += "Duration: " + durationString;
+
+                    //Last Hour
+                    hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
+                    hourResponse += "Sell: " + lastHourSellCount + " - " + lastHourSellVolume.toFixed(2) + " BTC";
+
+                    var response = {};
+                    response.value = valueResponse;
+                    response.volume = volumeResponse;
+                    response.wall = wallResponse;
+                    response.trade = tradeResponse;
+                    response.hour = hourResponse;
+                    console.log(response);
+
+                    console.log("updating cache");
+                    self.novaLastResponse = response;
+                    self.novaLastUpdate = Date.now();
+
+                    resolve(response);
+                })
+            })
+        })
+    })
+    }
+    //
 
     self.getCMC = function() {
         return new Promise(

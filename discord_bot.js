@@ -258,28 +258,41 @@ var commands = {
 				})
 
 			return;
-
-			//
-			// var richEmbed = new Discord.RichEmbed()
-			// 	.setAuthor("C - C E X E X C H A N G E", "https://c-cex.com/favicon.ico?v=2", "https://c-cex.com/?p=moon-btc")
-			// 	.setDescription(responseMsg)
-			// 	.setColor(0xF1C40F)
-			// 	.setTimestamp();
-			// msg.channel.sendEmbed(richEmbed)
-			// return;
 		}
 	},
 	"nova": {
 		usage: "",
 		description: "Returns the market information for NovaExchange",
 		process: function(bot, msg, suffix) {
-			var richEmbed = new Discord.RichEmbed()
-				.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
-				.setDescription(responseMsg)
-				.setColor(0xF1C40F)
-				.setTimestamp();
-			msg.channel.sendEmbed(richEmbed)
+			api.getNova()
+				.then(response => {
+					var nova = response;
+					valueEmbed = new Discord.RichEmbed()
+						.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
+						// .setDescription(responseMsg)
+						.setColor(0xF1C40F)
+						.setTimestamp();
+					valueEmbed.addField("Value", nova.value, true);
+					valueEmbed.addField("24H Volume", nova.volume, true);
+					valueEmbed.addField("Last 100 trades", nova.trade, true);
+					valueEmbed.addField("Last hour", nova.hour, true);
+					valueEmbed.addField("Walls", nova.wall, true);
+					msg.channel.sendEmbed(valueEmbed);
+				})
+				.catch(err => {
+					console.log("Got error");
+				})
+
 			return;
+
+
+			// var richEmbed = new Discord.RichEmbed()
+			// 	.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
+			// 	.setDescription(responseMsg)
+			// 	.setColor(0xF1C40F)
+			// 	.setTimestamp();
+			// msg.channel.sendEmbed(richEmbed)
+			// return;
 		}
 	},
 	"shitpost": {
