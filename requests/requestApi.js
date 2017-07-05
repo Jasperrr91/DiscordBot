@@ -90,12 +90,12 @@ let requestApi = function() {
                             //Trades
                             var durationString = moment.duration(lastTradesDuration, "seconds").format("h:mm:ss");
 
-                            tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
+                            tradeResponse = (lastTradesTotal*1).toFixed(2) + " BTC\n";
                             tradeResponse += "Duration: " + durationString;
 
                             //Last Hour
-                            hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
-                            hourResponse += "Sell: " + lastHourSellCount + " - " + lastHourSellVolume.toFixed(2) + " BTC";
+                            hourResponse = "Buy: " + lastHourBuyCount + " - " + (lastHourBuyVolume*1).toFixed(2) + " BTC\n";
+                            hourResponse += "Sell: " + lastHourSellCount + " - " + (lastHourSellVolume*1).toFixed(2) + " BTC";
 
 
                             var response = {};
