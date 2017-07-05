@@ -4,8 +4,26 @@ const request = require('request')
 
 let requestApi = function() {
     let self = this;
+    self.bleuLastUpdate = 0;
+    self.ccexLastUpdate = 0;
+    self.novaLastUpdate = 0;
+    self.valueLastUpdate = 0;
+
+    self.bleuLastResponse = {};
+    self.ccexLastResponse = {};
+    self.novaLastResponse = {};
+    self.valueLastResponse = {};
+
+
 
     self.getBleu = function() {
+        if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
+            return new Promise(
+                (resolve, reject) => {
+                    resolve(self.bleuLastResponse);
+                });
+        }
+
         var valueResponse;
         var volumeResponse;
         var wallResponse;
@@ -39,6 +57,8 @@ let requestApi = function() {
                         response.volume = volumeResponse;
                         response.wall = wallResponse;
                         console.log(response);
+                        self.bleuLastResponse = response;
+
                         resolve(response);
                     })
                 })
