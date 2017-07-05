@@ -292,7 +292,7 @@ let requestApi = function() {
                         lastTradesTotal += parseFloat(history.items[i].baseamount);
                     }
 
-                    lastTradesDuration = (Date.parse(history.items[0].datestamp) - Date.parse(history.result[history.items.length - 1].datestamp))/1000;
+                    lastTradesDuration = (Date.parse(history.items[0].datestamp) - Date.parse(history.items[history.items.length - 1].datestamp))/1000;
 
                     //Trades
                     console.log("Duration: " + lastTradesDuration);
