@@ -6,7 +6,7 @@ let requestApi = function() {
     let self = this;
     console.log("Initing requestapi");
 
-    getCMC() {
+    self.getCMC = function() {
         return new Promise(
             (resolve, reject) => {
 
