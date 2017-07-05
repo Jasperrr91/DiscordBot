@@ -17,17 +17,20 @@ let requestApi = function() {
             valueResponse += "**EUR**: \t€" + eur + "\n";
             valueResponse += "**BTC**: \t฿" + btc;
 
+            console.log(valueResponse);
+
             var usd24h = (prices[0]["24h_volume_usd"] * 1).toFixed(2);
             var btc24h = (usd24h/usd*btc).toFixed(2);
 
             var valueCap = "Rank: " + prices[0].rank + "\n";
             valueCap += "24H: $" + usd24h + "\n";
             valueCap += "24H: " + btc24h + " BTC";
+            console.log(valueCap);
 
             var response = {};
             response.valueResponse = valueResponse;
             response.valueCap = valueCap;
-
+            console.log('returning response');
             return response;
         })
     }
