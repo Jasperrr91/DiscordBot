@@ -19,7 +19,7 @@ let requestApi = function() {
                         console.log("Got 2");
                         var summary = JSON.parse(body);
 
-                        var avgPrice = summary.result[0].Average * 100000000;
+                        var avgPrice = (summary.result[0].Average * 100000000).toFixed(0);
                         valueResponse = avgPrice + " Satoshi";
 
                         var avgPrice = (summary.result[0].BaseVolume*1).toFixed(2);
@@ -30,7 +30,7 @@ let requestApi = function() {
                         var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
                         var buyPrice = orderBook.result.buy[0].Rate * 100000000;
                         var sellPrice = orderBook.result.sell[0].Rate * 100000000;
-                        wallResponse += "Buy: " + buyWall + " BTC @ " + buyPrice + " SAT\n";
+                        wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice + " SAT\n";
                         wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice + " SAT";
                         console.log("Making response");
 

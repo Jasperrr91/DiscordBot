@@ -223,9 +223,9 @@ var commands = {
 						// .setDescription(responseMsg)
 						.setColor(0xF1C40F)
 						.setTimestamp();
-					valueEmbed.addField("Value", bleu.valueResponse, true);
-					valueEmbed.addField("24H Volume", bleu.volumeResponse, true);
-					valueEmbed.addField("Walls", bleu.wallResponse, true);
+					valueEmbed.addField("Value", bleu.value, true);
+					valueEmbed.addField("24H Volume", bleu.volume, true);
+					valueEmbed.addField("Walls", bleu.wall, true);
 					msg.channel.sendEmbed(valueEmbed);
 				})
 				.catch(err => {
