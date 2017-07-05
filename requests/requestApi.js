@@ -1,3 +1,5 @@
+'use strict'
+
 const request = require('request')
 
 let requestApi = function() {
@@ -29,3 +31,5 @@ let requestApi = function() {
         })
     }
 }
+
+module.exports = requestApi
