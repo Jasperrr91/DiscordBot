@@ -30,8 +30,8 @@ let requestApi = function() {
                         var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
                         var buyPrice = orderBook.result.buy[0].Rate * 100000000;
                         var sellPrice = orderBook.result.sell[0].Rate * 100000000;
-                        wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice + " SAT\n";
-                        wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice + " SAT";
+                        wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
+                        wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
                         console.log("Making response");
 
                         var response = {};

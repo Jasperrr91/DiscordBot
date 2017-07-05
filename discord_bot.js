@@ -219,7 +219,7 @@ var commands = {
 					console.log(response);
 					var bleu = response;
 					valueEmbed = new Discord.RichEmbed()
-						.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
+						.setAuthor("B L E U T R A D E", "https://i1.wp.com/bitcoinexchangelist.com/wp-content/uploads/2016/12/ethereum-exchanges-list-bleutrade-logo.png", "https://bleutrade.com/exchange/MOON/BTC")
 						// .setDescription(responseMsg)
 						.setColor(0xF1C40F)
 						.setTimestamp();
@@ -233,14 +233,14 @@ var commands = {
 				})
 
 			return;
-
-			var richEmbed = new Discord.RichEmbed()
-				.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
-				.setDescription(responseMsg)
-				.setColor(0xF1C40F)
-				.setTimestamp();
-			msg.channel.sendEmbed(richEmbed)
-			return;
+            //
+			// var richEmbed = new Discord.RichEmbed()
+			// 	.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
+			// 	.setDescription(responseMsg)
+			// 	.setColor(0xF1C40F)
+			// 	.setTimestamp();
+			// msg.channel.sendEmbed(richEmbed)
+			// return;
 		}
 	},
 	"ccex": {
