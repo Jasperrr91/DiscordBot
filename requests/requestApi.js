@@ -136,12 +136,17 @@ let requestApi = function() {
             request.get('https://c-cex.com/t/api_pub.html?a=getorderbook&market=moon-btc&type=both&depth=1', function (orderBookErr, orderBookResponse, orderBookBody) {
                 request.get('https://c-cex.com/t/api_pub.html?a=getmarkethistory&market=moon-btc&count=100', function (historyErr, historyResponse, historyBody) {
                     request.get('https://c-cex.com/t/api_pub.html?a=getmarkethistory&market=moon-btc&count=100', function (volumeErr, volumeResponse, volumeBody) {
-                        var summary = JSON.parse(summaryBody);
+                        try {
+                            var summary = JSON.parse(summaryBody);
 
-                        console.log("Setting value");
-                        //Value
-                        var avgPrice = (summary.ticker.avg * 100000000).toFixed(0);
-                        valueResponse = avgPrice + " Satoshi";
+                            console.log("Setting value");
+                            //Value
+                            var avgPrice = (summary.ticker.avg * 100000000).toFixed(0);
+                            valueResponse = avgPrice + " Satoshi";
+                        } catch (SyntaxError e) {
+                            valueResponse = "API Unavailable";
+                        }
+
 
                         console.log("Setting volume");
                         //Volume
