@@ -218,7 +218,7 @@ var commands = {
 					console.log("Got response");
 					var bleu = response;
 					valueEmbed = new Discord.RichEmbed()
-						.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
+						.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
 						// .setDescription(responseMsg)
 						.setColor(0xF1C40F)
 						.setTimestamp();
