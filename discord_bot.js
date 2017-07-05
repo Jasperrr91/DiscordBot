@@ -355,22 +355,21 @@ var commands = {
 					novaEmbed.addField("Last hour", nova.hour, true);
 					novaEmbed.addField("Walls", nova.wall, true);
 
+					var richEmbed = new Discord.RichEmbed()
+						.setDescription("Why not donate some Moon shekels to: \n\t**2J7EH8Ux6zeShxRduAVDJeEkT73iHXFjd7**")
+						.setColor(0x2ECC71)
+						.setTimestamp();
+
 					msg.channel.sendEmbed(valueEmbed);
 					msg.channel.sendEmbed(bleuEmbed);
 					msg.channel.sendEmbed(ccexEmbed);
 					msg.channel.sendEmbed(novaEmbed);
+					msg.channel.sendEmbed(richEmbed)
 				})
 				.catch(err => {
 					console.log("Got error");
 				})
-
-			var richEmbed = new Discord.RichEmbed()
-				.setDescription("Why not donate some Moon shekels to: \n\t**2J7EH8Ux6zeShxRduAVDJeEkT73iHXFjd7**")
-				.setColor(0x2ECC71)
-				.setTimestamp();
-			msg.channel.sendEmbed(richEmbed)
-
-
+			
 			return;
 		}
 	},
