@@ -275,8 +275,8 @@ var commands = {
 				valueEmbed.addField("Values", valueResponse, true);
 				valueEmbed.addField("Cap", valueCap, true);
 			})
-			
-			msg.channel.sendEmbed(valueEmbed)
+
+			msg.channel.sendEmbed(valueEmbed);
 			return;
 		}
 	},
