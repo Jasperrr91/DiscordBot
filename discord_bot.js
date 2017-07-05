@@ -247,6 +247,7 @@ var commands = {
 		description: "Returns the market information for Bleutrade",
 		process: function(bot, msg, suffix) {
 			var valueEmbed
+			var valueReady = false;
 
 			request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {
 				var prices = JSON.parse(body);
@@ -271,16 +272,15 @@ var commands = {
 					.setTimestamp();
 				valueEmbed.addField("Values", valueResponse, true);
 				valueEmbed.addField("Cap", valueCap, true);
+				valueReady = true;
+
 			})
 
 			while(true) {
-				console.log(typeof valueEmbed);
-				if(valueEmbed) {
-
+				if (valueReady = true) {
 					msg.channel.sendEmbed(valueEmbed);
 					return;
 				}
-
 			}
 			return;
 		}
