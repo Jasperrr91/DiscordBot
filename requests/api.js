@@ -1,6 +1,6 @@
 const request = require('request')
 
-let api = function() {
+let requestApi = function() {
     let self = this;
 
     self.coinmarketcap = function() {
