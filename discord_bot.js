@@ -27,6 +27,7 @@ const TIPBOT_OPTIONS = {
 var requestApi = require('./requests/requestApi');
 var api = new requestApi();
 console.log(api.coinmarketcap());
+console.log(api.coinmarketcap);
 
 var fs = require('fs');
 

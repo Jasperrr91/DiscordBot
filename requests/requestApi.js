@@ -7,6 +7,7 @@ let requestApi = function() {
     console.log("Initing requestapi");
 
     self.coinmarketcap = function() {
+        console.log('getting coinmarketcap');
         request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {
             var prices = JSON.parse(body);
             var usd = (prices[0].price_usd * 1).toFixed(2);
