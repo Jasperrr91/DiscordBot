@@ -211,9 +211,11 @@ var commands = {
     	usage: "",
 		description: "Returns the market information for Bleutrade",
 		process: function(bot, msg, suffix) {
+    		console.log("Get bleu");
 
 			api.getBleu()
 				.then(response => {
+					console.log("Got response");
 					var bleu = response;
 					valueEmbed = new Discord.RichEmbed()
 						.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
@@ -226,7 +228,7 @@ var commands = {
 					msg.channel.sendEmbed(valueEmbed);
 				})
 				.catch(err => {
-					//
+					console.log("Got error");
 				})
 
 			return;

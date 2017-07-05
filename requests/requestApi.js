@@ -9,11 +9,14 @@ let requestApi = function() {
         var valueResponse;
         var volumeResponse;
         var wallResponse;
+        console.log("Get bleu data");
 
         return new Promise(
             (resolve, reject) => {
                 request.get('https://bleutrade.com/api/v2/public/getmarketsummary?market=MOON_BTC', function (err, response, body) {
+                console.log("Got 1");
                     request.get('https://bleutrade.com/api/v2/public/getorderbook?market=MOON_BTC&type=ALL&depth=1', function (err2, response2, body2) {
+                        console.log("Got 2");
                         var summary = JSON.parse(body);
 
                         var avgPrice = summary[0].result[0].Average * 100000000;
@@ -29,6 +32,7 @@ let requestApi = function() {
                         var sellPrice = orderBook[0].result.sell[0].Rate * 100000000;
                         wallResponse += "Buy: " + buyWall + " BTC @ " + buyPrice + " SAT\n";
                         wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice + " SAT";
+                        console.log("Making response");
 
                         var response = {};
                         response.value = valueResponse;
