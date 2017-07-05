@@ -88,7 +88,7 @@ let requestApi = function() {
                             lastTradesDuration = (history.result[0].TimeStamp - history.result[history.result.length - 1].TimeStamp)/1000;
 
                             //Trades
-                            var durationString = momentDuration(lastTradesDuration, "seconds").format("h:mm:ss");
+                            var durationString = moment.duration(lastTradesDuration, "seconds").format("h:mm:ss");
 
                             tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
                             tradeResponse += "Duration: " + durationString;
