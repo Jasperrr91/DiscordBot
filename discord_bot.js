@@ -299,20 +299,20 @@ var commands = {
 		usage: "",
 		description: "Returns all the market information",
 		process: function(bot, msg, suffix) {
-			var richEmbed = new Discord.RichEmbed()
-				.setDescription("Work in progress bitch. Be patient.")
-				.setColor(0xE74C3C)
-				.setTimestamp();
-			msg.channel.sendEmbed(richEmbed)
+			// var richEmbed = new Discord.RichEmbed()
+			// 	.setDescription("Work in progress bitch. Be patient.")
+			// 	.setColor(0xE74C3C)
+			// 	.setTimestamp();
+			// msg.channel.sendEmbed(richEmbed)
 			// return;
 
-			api.shitpost();
-
-			var valueEmbed
-
-			api.getCMC()
+			api.shitpost()
 				.then(response => {
-					var cmc = response;
+					var cmc = response[0];
+					var bleu = response[1];
+					var ccex = response[2];
+					var nova = response[3];
+
 					valueEmbed = new Discord.RichEmbed()
 						.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
 						// .setDescription(responseMsg)
@@ -320,11 +320,56 @@ var commands = {
 						.setTimestamp();
 					valueEmbed.addField("Values", cmc.valueResponse, true);
 					valueEmbed.addField("Cap", cmc.valueCap, true);
+
+					bleuEmbed = new Discord.RichEmbed()
+						.setAuthor("B L E U T R A D E", "https://i1.wp.com/bitcoinexchangelist.com/wp-content/uploads/2016/12/ethereum-exchanges-list-bleutrade-logo.png", "https://bleutrade.com/exchange/MOON/BTC")
+						// .setDescription(responseMsg)
+						.setColor(0xF1C40F)
+						.setTimestamp();
+					bleuEmbed.addField("Value", bleu.value, true);
+					bleuEmbed.addField("24H Volume", bleu.volume, true);
+					bleuEmbed.addField("Last 100 trades", bleu.trade, true);
+					bleuEmbed.addField("Last hour", bleu.hour, true);
+					bleuEmbed.addField("Walls", bleu.wall, true);
+
+
+					ccexEmbed = new Discord.RichEmbed()
+						.setAuthor("C - C E X E X C H A N G E", "https://www.cryptocompare.com/media/20008/ccex-logo.png", "https://c-cex.com/?p=moon-btc")
+						// .setDescription(responseMsg)
+						.setColor(0xF1C40F)
+						.setTimestamp();
+					ccexEmbed.addField("Value", ccex.value, true);
+					ccexEmbed.addField("24H Volume", ccex.volume, true);
+					ccexEmbed.addField("Last 100 trades", ccex.trade, true);
+					ccexEmbed.addField("Last hour", ccex.hour, true);
+					ccexEmbed.addField("Walls", ccex.wall, true);
+
+					var novaEmbed = new Discord.RichEmbed()
+						.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
+						// .setDescription(responseMsg)
+						.setColor(0xF1C40F)
+						.setTimestamp();
+					novaEmbed.addField("Value", nova.value, true);
+					novaEmbed.addField("24H Volume", nova.volume, true);
+					novaEmbed.addField("Last 100 trades", nova.trade, true);
+					novaEmbed.addField("Last hour", nova.hour, true);
+					novaEmbed.addField("Walls", nova.wall, true);
+
 					msg.channel.sendEmbed(valueEmbed);
+					msg.channel.sendEmbed(bleuEmbed);
+					msg.channel.sendEmbed(ccexEmbed);
+					msg.channel.sendEmbed(novaEmbed);
 				})
 				.catch(err => {
-					//
+					console.log("Got error");
 				})
+
+			var richEmbed = new Discord.RichEmbed()
+				.setDescription("Why not donate some Moon shekels to: \n\t**2J7EH8Ux6zeShxRduAVDJeEkT73iHXFjd7**")
+				.setColor(0x2ECC71)
+				.setTimestamp();
+			msg.channel.sendEmbed(richEmbed)
+
 
 			return;
 		}

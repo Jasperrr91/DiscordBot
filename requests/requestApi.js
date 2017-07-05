@@ -353,12 +353,15 @@ let requestApi = function() {
     }
 
     self.shitpost = function() {
-        var shitpost = {};
-
-        Promise.all([self.getCMC(), self.getBleu(), self.getCcex(), self.getNova()])
-            .then(response => {
-                console.log(response);
-        })
+        return new Promise(
+            (resolve, reject) => {
+                Promise.all([self.getCMC(), self.getBleu(), self.getCcex(), self.getNova()])
+                    .then(response => {
+                        console.log(response);
+                        resolve(response);
+                    })
+            }
+        )
 
     }
 
