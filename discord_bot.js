@@ -272,20 +272,11 @@ var commands = {
 					// .setDescription(responseMsg)
 					.setColor(0xF1C40F)
 					.setTimestamp();
-				valueEmbed.addField("Values", valueResponse);
-				valueEmbed.addField("Cap", valueCap);
-				msg.channel.sendEmbed(valueEmbed)
-				return;
+				valueEmbed.addField("Values", valueResponse, true);
+				valueEmbed.addField("Cap", valueCap, true);
 			})
-
-
-			var richEmbed = new Discord.RichEmbed()
-				.setThumbnail("http://i.imgur.com/75d8dQt.png")
-				.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
-				.setDescription(responseMsg)
-				.setColor(0xF1C40F)
-				.setTimestamp();
-			msg.channel.sendEmbed(richEmbed)
+			
+			msg.channel.sendEmbed(valueEmbed)
 			return;
 		}
 	},
