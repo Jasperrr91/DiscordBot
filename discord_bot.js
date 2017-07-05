@@ -211,6 +211,26 @@ var commands = {
     	usage: "",
 		description: "Returns the market information for Bleutrade",
 		process: function(bot, msg, suffix) {
+
+			api.getBleu()
+				.then(response => {
+					var bleu = response;
+					valueEmbed = new Discord.RichEmbed()
+						.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
+						// .setDescription(responseMsg)
+						.setColor(0xF1C40F)
+						.setTimestamp();
+					valueEmbed.addField("Value", bleu.valueResponse, true);
+					valueEmbed.addField("24H Volume", bleu.volumeResponse, true);
+					valueEmbed.addField("Walls", bleu.wallResponse, true);
+					msg.channel.sendEmbed(valueEmbed);
+				})
+				.catch(err => {
+					//
+				})
+
+			return;
+
 			var richEmbed = new Discord.RichEmbed()
 				.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
 				.setDescription(responseMsg)
@@ -251,7 +271,6 @@ var commands = {
 		description: "Returns the market information for Bleutrade",
 		process: function(bot, msg, suffix) {
 			var valueEmbed
-			var valueReady = false;
 
 			api.getCMC()
 				.then(response => {
