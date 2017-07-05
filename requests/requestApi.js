@@ -75,17 +75,14 @@ let requestApi = function() {
                                 if((Date.parse(history.result[i].TimeStamp) + 3600 * 1000) > Date.now()){
                                     if(history.result[i].OrderType == "BUY") {
                                         lastHourBuyCount++;
-                                        console.log(history.result[i]);
-                                        console.log(history.result[i].Total);
-                                        console.log(parseInt(history.result[i].Total));
-                                        lastHourBuyVolume += parseInt(history.result[i].Total);
+                                        lastHourBuyVolume += parseFloat(history.result[i].Total);
                                     } else if(history.result[i].OrderType == "SELL") {
                                         lastHourSellCount++;
-                                        lastHourSellVolume += parseInt(history.result[i].Total);
+                                        lastHourSellVolume += parseFloat(history.result[i].Total);
                                     }
                                 }
 
-                                lastTradesTotal += parseInt(history.result[i].Total);
+                                lastTradesTotal += parseFloat(history.result[i].Total);
                             }
 
                             lastTradesDuration = (Date.parse(history.result[0].TimeStamp) - Date.parse(history.result[history.result.length - 1].TimeStamp))/1000;
