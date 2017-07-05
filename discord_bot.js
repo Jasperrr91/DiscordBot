@@ -203,6 +203,92 @@ var commands = {
 
         }
     },
+	"blue": {
+    	usage: "",
+		description: "Returns the market information for Bleutrade",
+		process: function(bot, msg, suffix) {
+			var richEmbed = new Discord.RichEmbed()
+				.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
+				.setDescription(responseMsg)
+				.setColor(0xF1C40F)
+				.setTimestamp();
+			msg.channel.sendEmbed(richEmbed)
+			return;
+		}
+	},
+	"ccex": {
+		usage: "",
+		description: "Returns the market information for Bleutrade",
+		process: function(bot, msg, suffix) {
+			var richEmbed = new Discord.RichEmbed()
+				.setAuthor("C - C E X E X C H A N G E", "https://c-cex.com/favicon.ico?v=2", "https://c-cex.com/?p=moon-btc")
+				.setDescription(responseMsg)
+				.setColor(0xF1C40F)
+				.setTimestamp();
+			msg.channel.sendEmbed(richEmbed)
+			return;
+		}
+	},
+	"nova": {
+		usage: "",
+		description: "Returns the market information for Bleutrade",
+		process: function(bot, msg, suffix) {
+			var richEmbed = new Discord.RichEmbed()
+				.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
+				.setDescription(responseMsg)
+				.setColor(0xF1C40F)
+				.setTimestamp();
+			msg.channel.sendEmbed(richEmbed)
+			return;
+		}
+	},
+	"shitpost": {
+		usage: "",
+		description: "Returns the market information for Bleutrade",
+		process: function(bot, msg, suffix) {
+			var valueResponse;
+			var bleuResponse;
+			var ccexResponse;
+			var novaResponse;
+
+			request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {
+				var prices = JSON.parse(body);
+				var usd = (prices[0].price_usd * 1).toFixed(2);
+				var eur = (prices[0].price_eur * 1).toFixed(2);
+				var btc = (prices[0].price_btc * 1).toFixed(8);
+				var valueResponse = "**USD**: \t$" + usd + "\n";
+				valueResponse += "**EUR**: \t€" + eur + "\n";
+				valueResponse += "**BTC**: \t฿" + btc;
+
+				var usd24h = (prices[0]["24h_volume_usd"]).toFixed(2);
+				var btc24h = (usd24h/usd*btc).toFixed(2);
+
+				var valueCap = "Rank: " + prices[0].rank + "\n";
+				valueCap += "24H: $" + prices[0].rank + "\n";
+				valueCap += "24H: " + prices[0].rank + " BTC";
+
+				var valueEmbed = new Discord.RichEmbed()
+					.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
+					// .setDescription(responseMsg)
+					.setColor(0xF1C40F)
+					.setTimestamp();
+				valueEmbed.addField("Values", valueResponse);
+				valueEmbed.addField("Cap", valueCap);
+				msg.channel.sendEmbed(valueEmbed)
+				return;
+			})
+
+
+			var richEmbed = new Discord.RichEmbed()
+				.setThumbnail("http://i.imgur.com/75d8dQt.png")
+				.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
+				.setDescription(responseMsg)
+				.setColor(0xF1C40F)
+				.setTimestamp();
+			msg.channel.sendEmbed(richEmbed)
+			return;
+		}
+	},
 	"value": {
     	usage: "<amount>",
 		description: "Returns the value for the given amount of Mooncoins",
