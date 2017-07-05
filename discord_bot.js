@@ -274,7 +274,9 @@ var commands = {
 			})
 
 			while(true) {
+				console.log(typeof valueEmbed);
 				if(valueEmbed) {
+
 					msg.channel.sendEmbed(valueEmbed);
 					return;
 				}
