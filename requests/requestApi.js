@@ -14,24 +14,26 @@ let requestApi = function() {
     self.novaLastResponse = {};
     self.valueLastResponse = {};
 
-
-
     self.getBleu = function() {
-        if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
-            return new Promise(
-                (resolve, reject) => {
-                    console.log('returning from cache');
-                    resolve(self.bleuLastResponse);
-                });
-        }
+        // if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
+        //     return new Promise(
+        //         (resolve, reject) => {
+        //             console.log('returning from cache');
+        //             resolve(self.bleuLastResponse);
+        //         });
+        // }
 
         var valueResponse;
         var volumeResponse;
         var wallResponse;
-        console.log("Get bleu data");
 
         return new Promise(
             (resolve, reject) => {
+                if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
+                    console.log('returning from cache');
+                    resolve(self.bleuLastResponse);
+                }
+
                 request.get('https://bleutrade.com/api/v2/public/getmarketsummary?market=MOON_BTC', function (err, response, body) {
                 console.log("updating cache");
                     request.get('https://bleutrade.com/api/v2/public/getorderbook?market=MOON_BTC&type=ALL&depth=1', function (err2, response2, body2) {

@@ -229,14 +229,7 @@ var commands = {
 				})
 
 			return;
-            //
-			// var richEmbed = new Discord.RichEmbed()
-			// 	.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
-			// 	.setDescription(responseMsg)
-			// 	.setColor(0xF1C40F)
-			// 	.setTimestamp();
-			// msg.channel.sendEmbed(richEmbed)
-			// return;
+
 		}
 	},
 	"ccex": {
