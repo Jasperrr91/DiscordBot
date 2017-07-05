@@ -2,6 +2,7 @@ const request = require('request')
 
 let requestApi = function() {
     let self = this;
+    console.log("Initing requestapi");
 
     self.coinmarketcap = function() {
         request.get('https://api.coinmarketcap.com/v1/ticker/mooncoin/?convert=EUR', function (err, response, body) {

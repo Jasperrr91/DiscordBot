@@ -24,7 +24,7 @@ const TIPBOT_OPTIONS = {
 	OTHER_BALANCES: true,
 }
 
-var requestApi = require('./requests/api');
+var requestApi = require('./requests/requestApi');
 var api = new requestApi();
 console.log(api.coinmarketcap());
 
