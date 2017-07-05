@@ -242,7 +242,7 @@ var commands = {
 				.then(response => {
 					var ccex = response;
 					valueEmbed = new Discord.RichEmbed()
-						.setAuthor("C - C E X E X C H A N G E", "https://c-cex.com/favicon.ico?v=2", "https://c-cex.com/?p=moon-btc")
+						.setAuthor("C - C E X E X C H A N G E", "https://www.cryptocompare.com/media/20008/ccex-logo.png", "https://c-cex.com/?p=moon-btc")
 						// .setDescription(responseMsg)
 						.setColor(0xF1C40F)
 						.setTimestamp();
@@ -304,7 +304,9 @@ var commands = {
 				.setColor(0xE74C3C)
 				.setTimestamp();
 			msg.channel.sendEmbed(richEmbed)
-			return;
+			// return;
+
+			api.shitpost();
 
 			var valueEmbed
 

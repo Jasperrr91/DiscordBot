@@ -352,6 +352,16 @@ let requestApi = function() {
         })
     }
 
+    self.shitpost = function() {
+        var shitpost = {};
+
+        Promise.all([self.getCMC(), self.getBleu(), self.getCcex(), self.getNova()])
+            .then(response => {
+                console.log(response);
+        })
+
+    }
+
 }
 
 module.exports = requestApi
