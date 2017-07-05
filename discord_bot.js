@@ -255,6 +255,16 @@ var commands = {
 
 			var cmc = api.getCMC();
 
+
+
+			api.getCMC()
+				.then(response => {
+					var cmc = response;
+				})
+				.catch(err => {
+					//
+				})
+
 			console.log("CMC is", cmc);
 
 			// var cmc = api.coinmarketcap();
