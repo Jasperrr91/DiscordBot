@@ -245,7 +245,7 @@ var commands = {
 	},
 	"ccex": {
 		usage: "",
-		description: "Returns the market information for Bleutrade",
+		description: "Returns the market information for C-CEX",
 		process: function(bot, msg, suffix) {
 			var richEmbed = new Discord.RichEmbed()
 				.setAuthor("C - C E X E X C H A N G E", "https://c-cex.com/favicon.ico?v=2", "https://c-cex.com/?p=moon-btc")
@@ -258,7 +258,7 @@ var commands = {
 	},
 	"nova": {
 		usage: "",
-		description: "Returns the market information for Bleutrade",
+		description: "Returns the market information for NovaExchange",
 		process: function(bot, msg, suffix) {
 			var richEmbed = new Discord.RichEmbed()
 				.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
@@ -271,8 +271,15 @@ var commands = {
 	},
 	"shitpost": {
 		usage: "",
-		description: "Returns the market information for Bleutrade",
+		description: "Returns all the market information",
 		process: function(bot, msg, suffix) {
+			var richEmbed = new Discord.RichEmbed()
+				.setDescription("Work in progress bitch. Be patient.")
+				.setColor(0xE74C3C)
+				.setTimestamp();
+			msg.channel.sendEmbed(richEmbed)
+			return;
+
 			var valueEmbed
 
 			api.getCMC()
