@@ -221,6 +221,8 @@ var commands = {
 						.setTimestamp();
 					valueEmbed.addField("Value", bleu.value, true);
 					valueEmbed.addField("24H Volume", bleu.volume, true);
+					valueEmbed.addField("Last 100 trades", bleu.trade, true);
+					valueEmbed.addField("Last hour", bleu.hour, true);
 					valueEmbed.addField("Walls", bleu.wall, true);
 					msg.channel.sendEmbed(valueEmbed);
 				})

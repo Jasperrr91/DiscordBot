@@ -1,6 +1,8 @@
 'use strict'
 
-const request = require('request')
+const request = require('request');
+const moment = require('moment');
+const momentDuration = require("moment-duration-format");
 
 let requestApi = function() {
     let self = this;
@@ -26,6 +28,8 @@ let requestApi = function() {
         var valueResponse;
         var volumeResponse;
         var wallResponse;
+        var tradeResponse;
+        var hourResponse;
 
         return new Promise(
             (resolve, reject) => {
@@ -35,34 +39,79 @@ let requestApi = function() {
                     return;
                 }
 
-                request.get('https://bleutrade.com/api/v2/public/getmarketsummary?market=MOON_BTC', function (err, response, body) {
-                console.log("updating cache");
-                    request.get('https://bleutrade.com/api/v2/public/getorderbook?market=MOON_BTC&type=ALL&depth=1', function (err2, response2, body2) {
-                        var summary = JSON.parse(body);
+                request.get('https://bleutrade.com/api/v2/public/getmarketsummary?market=MOON_BTC', function (summaryErr, summaryResponse, summaryBody) {
+                    request.get('https://bleutrade.com/api/v2/public/getorderbook?market=MOON_BTC&type=ALL&depth=1', function (orderBookErr, orderBookResponse, orderBookBody) {
+                        request.get('https://bleutrade.com/api/v2/public/getmarkethistory?market=MOON_BTC&count=100', function (historyErr, historyResponse, historyBody) {
+                            var summary = JSON.parse(summaryBody);
 
-                        var avgPrice = (summary.result[0].Average * 100000000).toFixed(0);
-                        valueResponse = avgPrice + " Satoshi";
+                            //Value
+                            var avgPrice = (summary.result[0].Average * 100000000).toFixed(0);
+                            valueResponse = avgPrice + " Satoshi";
 
-                        var avgPrice = (summary.result[0].BaseVolume*1).toFixed(2);
-                        volumeResponse = avgPrice + " BTC";
+                            //Volume
+                            var avgPrice = (summary.result[0].BaseVolume * 1).toFixed(2);
+                            volumeResponse = avgPrice + " BTC";
 
-                        var orderBook = JSON.parse(body2);
-                        var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
-                        var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
-                        var buyPrice = orderBook.result.buy[0].Rate * 100000000;
-                        var sellPrice = orderBook.result.sell[0].Rate * 100000000;
-                        wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
-                        wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
+                            //Walls
+                            var orderBook = JSON.parse(orderBookBody);
+                            var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
+                            var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
+                            var buyPrice = orderBook.result.buy[0].Rate * 100000000;
+                            var sellPrice = orderBook.result.sell[0].Rate * 100000000;
+                            wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
+                            wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
 
-                        var response = {};
-                        response.value = valueResponse;
-                        response.volume = volumeResponse;
-                        response.wall = wallResponse;
-                        console.log(response);
-                        self.bleuLastResponse = response;
-                        self.bleuLastUpdate = Date.now();
+                            //Trades + Hours
+                            var history = JSON.parse(historyBody);
+                            var lastHourBuyCount = 0;
+                            var lastHourSellCount = 0;
+                            var lastHourBuyVolume = 0;
+                            var lastHourSellVolume = 0;
 
-                        resolve(response);
+                            var lastTradesTotal = 0;
+                            var lastTradesDuration = 0;
+
+                            for (i = 0; i < history.result.length; ++i) {
+                                if((Date.parse(history.result[i].TimeStamp) + 3600 * 1000) > Date.now()){
+                                    if(history.result[i].OrderType == "BUY") {
+                                        lastHourBuyCount++;
+                                        lastHourBuyVolume += history.result[i].Total;
+                                    } else if(history.result[i].OrderType == "SELL") {
+                                        lastHourSellCount++;
+                                        lastHourSellVolume += history.result[i].Total;
+                                    }
+                                }
+
+                                lastTradesTotal += history.result[i].Total;
+                            }
+
+                            lastTradesDuration = (history.result[0].TimeStamp - history.result[history.result.length - 1].TimeStamp)/1000;
+
+                            //Trades
+                            var durationString = momentDuration(lastTradesDuration, "seconds").format("h:mm:ss");
+
+                            tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
+                            tradeResponse += "Duration: " + durationString;
+
+                            //Last Hour
+                            hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
+                            hourResponse += "Sell: " + lastHourSellCount + " - " + lastHourSellVolume.toFixed(2) + " BTC";
+
+
+                            var response = {};
+                            response.value = valueResponse;
+                            response.volume = volumeResponse;
+                            response.wall = wallResponse;
+                            response.trade = tradeResponse;
+                            response.hour = hourResponse;
+                            console.log(response);
+
+                            console.log("updating cache");
+                            self.bleuLastResponse = response;
+                            self.bleuLastUpdate = Date.now();
+
+                            resolve(response);
+                        })
                     })
                 })
             })
