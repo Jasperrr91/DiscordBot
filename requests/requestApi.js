@@ -32,6 +32,7 @@ let requestApi = function() {
                 if (Date.now() < (self.bleuLastUpdate + 300*1000)) {
                     console.log('returning from cache');
                     resolve(self.bleuLastResponse);
+                    return;
                 }
 
                 request.get('https://bleutrade.com/api/v2/public/getmarketsummary?market=MOON_BTC', function (err, response, body) {
