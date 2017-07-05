@@ -153,7 +153,7 @@ let requestApi = function() {
                             var volume = JSON.parse(volumeBody);
                             volumeResponse = parseFloat(volume.moon.vol).toFixed(2) + " BTC";
                         } catch (e) {
-                            valueResponse = "API Unavailable";
+                            volumeResponse = "API Unavailable";
                         }
 
 
@@ -168,7 +168,7 @@ let requestApi = function() {
                             wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
                             wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
                         } catch (e) {
-                            valueResponse = "API Unavailable";
+                            wallResponse = "API Unavailable";
                         }
 
                         try {
@@ -214,7 +214,8 @@ let requestApi = function() {
                             hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
                             hourResponse += "Sell: " + lastHourSellCount + " - " + lastHourSellVolume.toFixed(2) + " BTC";
                         } catch (e) {
-                            valueResponse = "API Unavailable";
+                            tradeResponse = "API Unavailable";
+                            hourResponse = "API Unavailable";
                         }
 
                         var response = {};
