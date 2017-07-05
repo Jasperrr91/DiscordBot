@@ -272,16 +272,10 @@ var commands = {
 					.setTimestamp();
 				valueEmbed.addField("Values", valueResponse, true);
 				valueEmbed.addField("Cap", valueCap, true);
-				valueReady = true;
+				msg.channel.sendEmbed(valueEmbed);
 
 			})
 
-			while(true) {
-				if (valueReady = true) {
-					msg.channel.sendEmbed(valueEmbed);
-					return;
-				}
-			}
 			return;
 		}
 	},
