@@ -260,7 +260,7 @@ var commands = {
 				valueResponse += "**EUR**: \t€" + eur + "\n";
 				valueResponse += "**BTC**: \t฿" + btc;
 
-				var usd24h = (prices[0]["24h_volume_usd"]).toFixed(2);
+				var usd24h = (prices[0]["24h_volume_usd"] * 1).toFixed(2);
 				var btc24h = (usd24h/usd*btc).toFixed(2);
 
 				var valueCap = "Rank: " + prices[0].rank + "\n";
