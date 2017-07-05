@@ -75,27 +75,28 @@ let requestApi = function() {
                                 if((Date.parse(history.result[i].TimeStamp) + 3600 * 1000) > Date.now()){
                                     if(history.result[i].OrderType == "BUY") {
                                         lastHourBuyCount++;
-                                        lastHourBuyVolume += history.result[i].Total;
+                                        lastHourBuyVolume += parseInt(history.result[i].Total);
                                     } else if(history.result[i].OrderType == "SELL") {
                                         lastHourSellCount++;
-                                        lastHourSellVolume += history.result[i].Total;
+                                        lastHourSellVolume += parseInt(history.result[i].Total);
                                     }
                                 }
 
-                                lastTradesTotal += history.result[i].Total;
+                                lastTradesTotal += parseInt(history.result[i].Total);
                             }
 
                             lastTradesDuration = (history.result[0].TimeStamp - history.result[history.result.length - 1].TimeStamp)/1000;
 
                             //Trades
+                            console.log("Duration: " + lastTradesDuration);
                             var durationString = moment.duration(lastTradesDuration, "seconds").format("h:mm:ss");
 
-                            tradeResponse = (lastTradesTotal*1).toFixed(2) + " BTC\n";
+                            tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
                             tradeResponse += "Duration: " + durationString;
 
                             //Last Hour
-                            hourResponse = "Buy: " + lastHourBuyCount + " - " + (lastHourBuyVolume*1).toFixed(2) + " BTC\n";
-                            hourResponse += "Sell: " + lastHourSellCount + " - " + (lastHourSellVolume*1).toFixed(2) + " BTC";
+                            hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
+                            hourResponse += "Sell: " + lastHourSellCount + " - " + lastHourSellVolume.toFixed(2) + " BTC";
 
 
                             var response = {};
