@@ -143,7 +143,7 @@ let requestApi = function() {
                             //Value
                             var avgPrice = (summary.ticker.avg * 100000000).toFixed(0);
                             valueResponse = avgPrice + " Satoshi";
-                        } catch (SyntaxError e) {
+                        } catch (e) {
                             valueResponse = "API Unavailable";
                         }
 
