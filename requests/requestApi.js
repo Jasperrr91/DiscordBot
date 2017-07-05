@@ -147,63 +147,75 @@ let requestApi = function() {
                             valueResponse = "API Unavailable";
                         }
 
-
-                        console.log("Setting volume");
-                        //Volume
-                        var volume = JSON.parse(volumeBody);
-                        volumeResponse = parseFloat(volume.moon.vol).toFixed(2) + " BTC";
-
-                        console.log("Setting walls");
-                        //Walls
-                        var orderBook = JSON.parse(orderBookBody);
-                        var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
-                        var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
-                        var buyPrice = orderBook.result.buy[0].Rate * 100000000;
-                        var sellPrice = orderBook.result.sell[0].Rate * 100000000;
-                        wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
-                        wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
-
-                        //Trades + Hours
-                        var history = JSON.parse(historyBody);
-                        var lastHourBuyCount = 0;
-                        var lastHourSellCount = 0;
-                        var lastHourBuyVolume = 0;
-                        var lastHourSellVolume = 0;
-
-                        var lastTradesTotal = 0;
-                        var lastTradesDuration = 0;
-
-                        console.log("Processing trades");
-
-                        for (var i = 0; i < history.result.length; ++i) {
-                            if ((Date.parse(history.result[i].TimeStamp) + 3600 * 1000) > Date.now()) {
-                                if (history.result[i].OrderType == "BUY") {
-                                    lastHourBuyCount++;
-                                    lastHourBuyVolume += parseFloat(history.result[i].Total);
-                                } else if (history.result[i].OrderType == "SELL") {
-                                    lastHourSellCount++;
-                                    lastHourSellVolume += parseFloat(history.result[i].Total);
-                                }
-                            }
-
-                            lastTradesTotal += parseFloat(history.result[i].Total);
+                        try {
+                            console.log("Setting volume");
+                            //Volume
+                            var volume = JSON.parse(volumeBody);
+                            volumeResponse = parseFloat(volume.moon.vol).toFixed(2) + " BTC";
+                        } catch (e) {
+                            valueResponse = "API Unavailable";
                         }
 
-                        lastTradesDuration = (Date.parse(history.result[0].TimeStamp) - Date.parse(history.result[history.result.length - 1].TimeStamp)) / 1000;
 
-                        console.log("Setting trades");
-                        //Trades
-                        console.log("Duration: " + lastTradesDuration);
-                        var durationString = moment.duration(lastTradesDuration, "seconds").format("h:mm:ss");
+                        try {
+                            console.log("Setting walls");
+                            //Walls
+                            var orderBook = JSON.parse(orderBookBody);
+                            var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
+                            var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
+                            var buyPrice = orderBook.result.buy[0].Rate * 100000000;
+                            var sellPrice = orderBook.result.sell[0].Rate * 100000000;
+                            wallResponse = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
+                            wallResponse += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
+                        } catch (e) {
+                            valueResponse = "API Unavailable";
+                        }
 
-                        tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
-                        tradeResponse += "Duration: " + durationString;
+                        try {
+                            //Trades + Hours
+                            var history = JSON.parse(historyBody);
+                            var lastHourBuyCount = 0;
+                            var lastHourSellCount = 0;
+                            var lastHourBuyVolume = 0;
+                            var lastHourSellVolume = 0;
 
-                        console.log("Setting hours");
+                            var lastTradesTotal = 0;
+                            var lastTradesDuration = 0;
 
-                        //Last Hour
-                        hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
-                        hourResponse += "Sell: " + lastHourSellCount + " - " + lastHourSellVolume.toFixed(2) + " BTC";
+                            console.log("Processing trades");
+
+                            for (var i = 0; i < history.result.length; ++i) {
+                                if ((Date.parse(history.result[i].TimeStamp) + 3600 * 1000) > Date.now()) {
+                                    if (history.result[i].OrderType == "BUY") {
+                                        lastHourBuyCount++;
+                                        lastHourBuyVolume += parseFloat(history.result[i].Total);
+                                    } else if (history.result[i].OrderType == "SELL") {
+                                        lastHourSellCount++;
+                                        lastHourSellVolume += parseFloat(history.result[i].Total);
+                                    }
+                                }
+
+                                lastTradesTotal += parseFloat(history.result[i].Total);
+                            }
+
+                            lastTradesDuration = (Date.parse(history.result[0].TimeStamp) - Date.parse(history.result[history.result.length - 1].TimeStamp)) / 1000;
+
+                            console.log("Setting trades");
+                            //Trades
+                            console.log("Duration: " + lastTradesDuration);
+                            var durationString = moment.duration(lastTradesDuration, "seconds").format("h:mm:ss");
+
+                            tradeResponse = lastTradesTotal.toFixed(2) + " BTC\n";
+                            tradeResponse += "Duration: " + durationString;
+
+                            console.log("Setting hours");
+
+                            //Last Hour
+                            hourResponse = "Buy: " + lastHourBuyCount + " - " + lastHourBuyVolume.toFixed(2) + " BTC\n";
+                            hourResponse += "Sell: " + lastHourSellCount + " - " + lastHourSellVolume.toFixed(2) + " BTC";
+                        } catch (e) {
+                            valueResponse = "API Unavailable";
+                        }
 
                         var response = {};
                         response.value = valueResponse;
