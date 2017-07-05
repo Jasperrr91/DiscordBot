@@ -38,6 +38,7 @@ let requestApi = function() {
                         response.value = valueResponse;
                         response.volume = volumeResponse;
                         response.wall = wallResponse;
+                        console.log(response);
                         resolve(response);
                     })
                 })

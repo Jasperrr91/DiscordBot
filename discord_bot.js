@@ -216,6 +216,7 @@ var commands = {
 			api.getBleu()
 				.then(response => {
 					console.log("Got response");
+					console.log(response);
 					var bleu = response;
 					valueEmbed = new Discord.RichEmbed()
 						.setAuthor("B L E U T R A D E", "https://bleutrade.com/imgs/favicon.ico", "https://bleutrade.com/exchange/MOON/BTC")
