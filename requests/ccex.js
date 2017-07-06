@@ -23,7 +23,10 @@ let ccex = function() {
                     return;
                 }
 
+                console.log("Ik trigger sowieso");
+
                 request.get('https://c-cex.com/t/moon-btc.json', function (err, response, body) {
+                    console.log("TRIGGER DAN");
                     console.log("CCEX Api body is:", body);
                     try {
                         var summary = JSON.parse(body);
@@ -35,7 +38,6 @@ let ccex = function() {
 
                     self.cache.summaryMsg.response = responseMsg;
                     self.cache.summaryMsg.time = Date.now();
-                    console.log("Returning:", responseMsg);
                     resolve(responseMsg);
                 })
             })
@@ -53,7 +55,6 @@ let ccex = function() {
 
                 request.get('https://c-cex.com/t/api_pub.html?a=getorderbook&market=moon-btc&type=both&depth=1', function (orderBookErr, orderBookResponse, orderBookBody) {
                     try {
-                        console.log("Setting walls");
                         //Walls
                         var orderBook = JSON.parse(orderBookBody);
                         console.log(orderBook);

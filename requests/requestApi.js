@@ -116,16 +116,14 @@ let requestApi = function() {
 
         return new Promise(
             (resolve, reject) => {
-                Promise.all([ccex.volumeMsg(), ccex.orderBookMsg(), ccex.historyMsg(), ccex.volumeMsg()])
+                Promise.all([ccex.summaryMsg(), ccex.orderBookMsg(), ccex.historyMsg(), ccex.volumeMsg()])
                     .then(ccexData => {
                         console.log('i should trigger last')
-                        console.log(ccexData);
                         response.value = ccexData[0];
                         response.volume = ccexData[3];
                         response.wall = ccexData[1];
                         response.trade = ccexData[2].trade;
                         response.hour = ccexData[2].hour;
-                        console.log(response);
                         resolve(response);
                         return response;
                     })
