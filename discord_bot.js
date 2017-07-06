@@ -369,7 +369,7 @@ var commands = {
 				.catch(err => {
 					console.log("Got error");
 				})
-			
+
 			return;
 		}
 	},
