@@ -114,10 +114,13 @@ let requestApi = function() {
     self.getCcex = function() {
         var response = {};
 
+
+
         return new Promise(
             (resolve, reject) => {
                 Promise.all([ccex.volumeMsg(), ccex.orderBookMsg(), ccex.historyMsg(), ccex.volumeMsg()])
                     .then(ccexData => {
+                        console.log('i should trigger last')
                         console.log(ccexData);
                         response.value = ccexData[0];
                         response.volume = ccexData[3];
@@ -126,7 +129,9 @@ let requestApi = function() {
                         response.hour = ccexData[2].hour;
                         console.log(response);
                         resolve(response);
+                        return response;
                     })
+                    .catch(() => { console.log('failed!') });
             })
     }
 
