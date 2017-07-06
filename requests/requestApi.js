@@ -118,6 +118,7 @@ let requestApi = function() {
             (resolve, reject) => {
                 Promise.all([ccex.volumeMsg(), ccex.orderBookMsg(), ccex.historyMsg(), ccex.volumeMsg()])
                     .then(ccexData => {
+                        console.log(ccexData);
                         response.value = ccexData[0];
                         response.volume = ccexData[3];
                         response.wall = ccexData[1];
