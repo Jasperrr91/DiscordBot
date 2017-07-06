@@ -15,9 +15,8 @@ let ccex = function() {
 
     self.summaryMsg = function() {
         var responseMsg;
-        new Promise(
+        return new Promise(
             (resolve, reject) => {
-                resolve('testing 12');
                 if (Date.now() < (self.cache.summaryMsg.time + 300*1000)) {
                     console.log('returning from cache');
                     resolve(self.cache.summaryMsg.response);
@@ -43,9 +42,8 @@ let ccex = function() {
 
     self.orderBookMsg = function() {
         var responseMsg;
-        new Promise(
+        return new Promise(
             (resolve, reject) => {
-                resolve('testing 12');
                 if (Date.now() < (self.cache.orderBookMsg.time + 300*1000)) {
                     console.log('returning from cache');
                     resolve(self.cache.orderBookMsg.response);
@@ -84,9 +82,8 @@ let ccex = function() {
         var tradeResponse;
         var hourResponse;
 
-        new Promise(
+        return new Promise(
             (resolve, reject) => {
-                resolve({trade: "testing 12", hour: "testing 34"});
                 if (Date.now() < (self.cache.historyMsg.time + 300*1000)) {
                     console.log('returning from cache');
                     resolve(self.cache.historyMsg.response);
@@ -155,9 +152,8 @@ let ccex = function() {
 
     self.volumeMsg = function() {
         var responseMsg;
-        new Promise(
+        return new Promise(
             (resolve, reject) => {
-                resolve('testing 12');
                 if (Date.now() < (self.cache.volumeMsg.time + 300*1000)) {
                     console.log('returning from cache');
                     resolve(self.cache.volumeMsg.response);
