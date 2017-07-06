@@ -24,7 +24,7 @@ let ccex = function() {
                 }
 
                 request.get('https://c-cex.com/t/moon-btc.json', function (err, response, body) {
-                    console.log(body);
+                    console.log("CCEX Api body is:", body);
                     try {
                         var summary = JSON.parse(body);
                         var avgPrice = (summary.ticker.avg * 100000000).toFixed(0);
