@@ -4,7 +4,7 @@ const request = require('request');
 const moment = require('moment');
 const momentDuration = require("moment-duration-format");
 
-let ccexApi = function() {
+let ccex = function() {
     let self = this;
 
     this.cache = {};
@@ -174,4 +174,4 @@ let ccexApi = function() {
     }
 }
 
-    module.exports = ccexApi
+    module.exports = ccex
