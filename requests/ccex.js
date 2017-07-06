@@ -34,6 +34,7 @@ let ccex = function() {
 
                     self.cache.summaryMsg.response = responseMsg;
                     self.cache.summaryMsg.time = Date.now();
+                    console.log("Returning:", responseMsg);
                     resolve(responseMsg);
                 })
             })
@@ -54,6 +55,8 @@ let ccex = function() {
                         console.log("Setting walls");
                         //Walls
                         var orderBook = JSON.parse(orderBookBody);
+                        console.log(orderBook);
+
                         var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
                         var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
                         var buyPrice = orderBook.result.buy[0].Rate * 100000000;
@@ -66,6 +69,7 @@ let ccex = function() {
 
                     self.cache.orderBookMsg.response = responseMsg;
                     self.cache.orderBookMsg.time = Date.now();
+                    console.log("Returning:", responseMsg);
                     resolve(responseMsg);
                 })
 
@@ -139,6 +143,7 @@ let ccex = function() {
 
                     self.cache.historyMsg.response = responseData;
                     self.cache.historyMsg.time = Date.now();
+                    console.log("Returning:", responseData);
                     resolve(responseData);
                 })
 
@@ -167,6 +172,7 @@ let ccex = function() {
 
                     self.cache.volumeMsg.response = responseMsg;
                     self.cache.volumeMsg.time = Date.now();
+                    console.log("Returning:", responseMsg);
                     resolve(responseMsg);
                 })
 
