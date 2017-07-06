@@ -114,8 +114,6 @@ let requestApi = function() {
     self.getCcex = function() {
         var response = {};
 
-
-
         return new Promise(
             (resolve, reject) => {
                 Promise.all([ccex.volumeMsg(), ccex.orderBookMsg(), ccex.historyMsg(), ccex.volumeMsg()])
