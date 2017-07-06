@@ -3,7 +3,7 @@
 const request = require('request');
 const moment = require('moment');
 const momentDuration = require("moment-duration-format");
-var ccexapi = require('./requests/ccex');
+var ccexapi = require('./ccex');
 var ccex = new ccexapi();
 
 let requestApi = function() {
