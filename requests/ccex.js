@@ -23,7 +23,8 @@ let ccex = function() {
                     return;
                 }
 
-                request.get('https://c-cex.com/t/moon-btc.json', function (summaryErr, summaryResponse, summaryBody) {
+                request.get('https://c-cex.com/t/moon-btc.json', function (err, response, body) {
+                    console.log(body);
                     try {
                         var summary = JSON.parse(body);
                         var avgPrice = (summary.ticker.avg * 100000000).toFixed(0);
