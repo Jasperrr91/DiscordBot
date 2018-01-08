@@ -116,14 +116,14 @@ let requestApi = function() {
 
         return new Promise(
             (resolve, reject) => {
-                Promise.all([ccex.summaryMsg(), ccex.orderBookMsg(), ccex.historyMsg(), ccex.volumeMsg()])
+                Promise.all([ccex.summaryMsg(), ccex.orderBookMsg(), /*ccex.historyMsg(),*/ ccex.volumeMsg()])
                     .then(ccexData => {
                         console.log('i should trigger last')
                         response.value = ccexData[0];
-                        response.volume = ccexData[3];
+                        response.volume = ccexData[2];
                         response.wall = ccexData[1];
-                        response.trade = ccexData[2].trade;
-                        response.hour = ccexData[2].hour;
+                        // response.trade = ccexData[2].trade;
+                        // response.hour = ccexData[2].hour;
                         resolve(response);
                         return response;
                     })
@@ -256,7 +256,7 @@ let requestApi = function() {
     self.shitpost = function() {
         return new Promise(
             (resolve, reject) => {
-                Promise.all([self.getCMC(), self.getBleu(), self.getCcex(), self.getNova()])
+                Promise.all([self.getCMC(), self.getBleu(), self.getCcex()/*, self.getNova()*/])
                     .then(response => {
                         console.log(response);
                         resolve(response);

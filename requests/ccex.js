@@ -25,12 +25,12 @@ let ccex = function() {
 
                 console.log("Ik trigger sowieso");
 
-                request.get('https://c-cex.com/t/moon-btc.json', function (err, response, body) {
+                request.get('https://www.coinexchange.io/api/v1/getmarketsummary?market_id=334', function (err, response, body) {
                     console.log("TRIGGER DAN");
                     console.log("CCEX Api body is:", body);
                     try {
                         var summary = JSON.parse(body);
-                        var avgPrice = (summary.ticker.avg * 100000000).toFixed(0);
+                        var avgPrice = (summary.result.LastPrice * 100000000).toFixed(0);
                         responseMsg = avgPrice + " Satoshi";
                     } catch (e) {
                         responseMsg = "API Unavailable";
@@ -53,18 +53,23 @@ let ccex = function() {
                     return;
                 }
 
-                request.get('https://c-cex.com/t/api_pub.html?a=getorderbook&market=moon-btc&type=both&depth=1', function (orderBookErr, orderBookResponse, orderBookBody) {
+                request.get('https://www.coinexchange.io/api/v1/getmarketsummary?market_id=334', function (orderBookErr, orderBookResponse, orderBookBody) {
                     try {
                         //Walls
                         var orderBook = JSON.parse(orderBookBody);
                         console.log(orderBook);
 
-                        var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
-                        var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
-                        var buyPrice = orderBook.result.buy[0].Rate * 100000000;
-                        var sellPrice = orderBook.result.sell[0].Rate * 100000000;
-                        responseMsg = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
-                        responseMsg += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
+                        // var buyWall = (orderBook.result.buy[0].Quantity * orderBook.result.buy[0].Rate).toFixed(2);
+                        // var sellWall = (orderBook.result.sell[0].Quantity * orderBook.result.sell[0].Rate).toFixed(2);
+                        // var buyPrice = orderBook.result.buy[0].Rate * 100000000;
+                        // var sellPrice = orderBook.result.sell[0].Rate * 100000000;
+                        // responseMsg = "Buy: " + buyWall + " BTC @ " + buyPrice.toFixed(0) + " SAT\n";
+                        // responseMsg += "Sell: " + sellWall + " BTC @ " + sellPrice.toFixed(0) + " SAT";
+
+                        var buyPrice = orderBook.result.BidPrice * 100000000;
+                        var sellPrice = orderBook.result.AskPrice * 100000000;
+                        responseMsg = "Buy: @ " + buyPrice.toFixed(0) + " SAT\n";
+                        responseMsg += "Sell: @ " + sellPrice.toFixed(0) + " SAT";
                     } catch (e) {
                         responseMsg = "API Unavailable";
                     }
@@ -162,12 +167,12 @@ let ccex = function() {
                     return;
                 }
 
-                request.get('https://c-cex.com/t/api_pub.html?a=getmarkethistory&market=moon-btc&count=100', function (volumeErr, volumeResponse, volumeBody) {
+                request.get('https://www.coinexchange.io/api/v1/getmarketsummary?market_id=334', function (volumeErr, volumeResponse, volumeBody) {
                     try {
                         console.log("Setting volume");
                         //Volume
                         var volume = JSON.parse(volumeBody);
-                        responseMsg = parseFloat(volume.moon.vol).toFixed(2) + " BTC";
+                        responseMsg = parseFloat(volume.result.Volume).toFixed(2) + " BTC";
                     } catch (e) {
                         responseMsg = "API Unavailable";
                     }

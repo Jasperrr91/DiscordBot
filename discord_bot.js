@@ -234,22 +234,22 @@ var commands = {
 
 		}
 	},
-	"ccex": {
+	"coinexchange": {
 		usage: "",
-		description: "Returns the market information for C-CEX",
+		description: "Returns the market information for CoinExchange",
 		process: function(bot, msg, suffix) {
 			api.getCcex()
 				.then(response => {
 					var ccex = response;
 					valueEmbed = new Discord.RichEmbed()
-						.setAuthor("C - C E X E X C H A N G E", "https://www.cryptocompare.com/media/20008/ccex-logo.png", "https://c-cex.com/?p=moon-btc")
+						.setAuthor("C O I N E X C H A N G E", "https://i.imgur.com/7BMHLuU.png", "https://www.coinexchange.io/market/MOON/BTC")
 						// .setDescription(responseMsg)
 						.setColor(0xF1C40F)
 						.setTimestamp();
 					valueEmbed.addField("Value", ccex.value, true);
 					valueEmbed.addField("24H Volume", ccex.volume, true);
-					valueEmbed.addField("Last 100 trades", ccex.trade, true);
-					valueEmbed.addField("Last hour", ccex.hour, true);
+					// valueEmbed.addField("Last 100 trades", ccex.trade, true);
+					// valueEmbed.addField("Last hour", ccex.hour, true);
 					valueEmbed.addField("Walls", ccex.wall, true);
 					msg.channel.sendEmbed(valueEmbed);
 				})
@@ -260,42 +260,42 @@ var commands = {
 			return;
 		}
 	},
-	"nova": {
-		usage: "",
-		description: "Returns the market information for NovaExchange",
-		process: function(bot, msg, suffix) {
-			api.getNova()
-				.then(response => {
-					var nova = response;
-					valueEmbed = new Discord.RichEmbed()
-						.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
-						// .setDescription(responseMsg)
-						.setColor(0xF1C40F)
-						.setTimestamp();
-					valueEmbed.addField("Value", nova.value, true);
-					valueEmbed.addField("24H Volume", nova.volume, true);
-					valueEmbed.addField("Last 100 trades", nova.trade, true);
-					valueEmbed.addField("Last hour", nova.hour, true);
-					valueEmbed.addField("Walls", nova.wall, true);
-					msg.channel.sendEmbed(valueEmbed);
-				})
-				.catch(err => {
-					console.log("Got error");
-				})
-
-			return;
-
-
-			// var richEmbed = new Discord.RichEmbed()
-			// 	.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
-			// 	.setDescription(responseMsg)
-			// 	.setColor(0xF1C40F)
-			// 	.setTimestamp();
-			// msg.channel.sendEmbed(richEmbed)
-			// return;
-		}
-	},
-	"shitpost": {
+	// "nova": {
+	// 	usage: "",
+	// 	description: "Returns the market information for NovaExchange",
+	// 	process: function(bot, msg, suffix) {
+	// 		api.getNova()
+	// 			.then(response => {
+	// 				var nova = response;
+	// 				valueEmbed = new Discord.RichEmbed()
+	// 					.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
+	// 					// .setDescription(responseMsg)
+	// 					.setColor(0xF1C40F)
+	// 					.setTimestamp();
+	// 				valueEmbed.addField("Value", nova.value, true);
+	// 				valueEmbed.addField("24H Volume", nova.volume, true);
+	// 				valueEmbed.addField("Last 100 trades", nova.trade, true);
+	// 				valueEmbed.addField("Last hour", nova.hour, true);
+	// 				valueEmbed.addField("Walls", nova.wall, true);
+	// 				msg.channel.sendEmbed(valueEmbed);
+	// 			})
+	// 			.catch(err => {
+	// 				console.log("Got error");
+	// 			})
+    //
+	// 		return;
+    //
+    //
+	// 		// var richEmbed = new Discord.RichEmbed()
+	// 		// 	.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
+	// 		// 	.setDescription(responseMsg)
+	// 		// 	.setColor(0xF1C40F)
+	// 		// 	.setTimestamp();
+	// 		// msg.channel.sendEmbed(richEmbed)
+	// 		// return;
+	// 	}
+	// },
+	"price": {
 		usage: "",
 		description: "Returns all the market information",
 		process: function(bot, msg, suffix) {
@@ -311,7 +311,7 @@ var commands = {
 					var cmc = response[0];
 					var bleu = response[1];
 					var ccex = response[2];
-					var nova = response[3];
+					// var nova = response[3];
 
 					valueEmbed = new Discord.RichEmbed()
 						.setAuthor("CoinMarketCap", "http://i.imgur.com/75d8dQt.png", "https://coinmarketcap.com/currencies/mooncoin/")
@@ -334,7 +334,7 @@ var commands = {
 
 
 					ccexEmbed = new Discord.RichEmbed()
-						.setAuthor("C - C E X E X C H A N G E", "https://www.cryptocompare.com/media/20008/ccex-logo.png", "https://c-cex.com/?p=moon-btc")
+						.setAuthor("C O I N E X C H A N G E", "https://i.imgur.com/7BMHLuU.png", "https://www.coinexchange.io/market/MOON/BTC")
 						// .setDescription(responseMsg)
 						.setColor(0xF1C40F)
 						.setTimestamp();
@@ -343,17 +343,17 @@ var commands = {
 					ccexEmbed.addField("Last 100 trades", ccex.trade, true);
 					ccexEmbed.addField("Last hour", ccex.hour, true);
 					ccexEmbed.addField("Walls", ccex.wall, true);
-
-					var novaEmbed = new Discord.RichEmbed()
-						.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
-						// .setDescription(responseMsg)
-						.setColor(0xF1C40F)
-						.setTimestamp();
-					novaEmbed.addField("Value", nova.value, true);
-					novaEmbed.addField("24H Volume", nova.volume, true);
-					novaEmbed.addField("Last 100 trades", nova.trade, true);
-					novaEmbed.addField("Last hour", nova.hour, true);
-					novaEmbed.addField("Walls", nova.wall, true);
+                    //
+					// var novaEmbed = new Discord.RichEmbed()
+					// 	.setAuthor("N O V A E X C H A N G E", "https://novaexchange.com/static/novaexchange_logo_small.png", "https://novaexchange.com/market/BTC_MOON/")
+					// 	// .setDescription(responseMsg)
+					// 	.setColor(0xF1C40F)
+					// 	.setTimestamp();
+					// novaEmbed.addField("Value", nova.value, true);
+					// novaEmbed.addField("24H Volume", nova.volume, true);
+					// novaEmbed.addField("Last 100 trades", nova.trade, true);
+					// novaEmbed.addField("Last hour", nova.hour, true);
+					// novaEmbed.addField("Walls", nova.wall, true);
 
 					var richEmbed = new Discord.RichEmbed()
 						.setDescription("Why not donate some Moon shekels to: \n\t**2J7EH8Ux6zeShxRduAVDJeEkT73iHXFjd7**")
