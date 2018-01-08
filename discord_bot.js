@@ -340,8 +340,8 @@ var commands = {
 						.setTimestamp();
 					ccexEmbed.addField("Value", ccex.value, true);
 					ccexEmbed.addField("24H Volume", ccex.volume, true);
-					ccexEmbed.addField("Last 100 trades", ccex.trade, true);
-					ccexEmbed.addField("Last hour", ccex.hour, true);
+					// ccexEmbed.addField("Last 100 trades", ccex.trade, true);
+					// ccexEmbed.addField("Last hour", ccex.hour, true);
 					ccexEmbed.addField("Walls", ccex.wall, true);
                     //
 					// var novaEmbed = new Discord.RichEmbed()
