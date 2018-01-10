@@ -25,21 +25,66 @@ let ccex = function() {
 
                 console.log("Ik trigger sowieso");
 
-                request.get('https://www.coinexchange.io/api/v1/getmarketsummary?market_id=334', function (err, response, body) {
-                    console.log("TRIGGER DAN");
-                    console.log("CCEX Api body is:", body);
-                    try {
-                        var summary = JSON.parse(body);
-                        var avgPrice = (summary.result.LastPrice * 100000000).toFixed(0);
-                        responseMsg = avgPrice + " Satoshi";
-                    } catch (e) {
-                        responseMsg = "API Unavailable";
-                    }
+                    request({
+                        url: 'https://www.coinexchange.io/api/v1/getmarketsummary?market_id=334',
+                        method: "GET",
+                        header: {
+                            'visid_incap_1322663': 'ACGLoFRxR/WgG/WcR90MWebbUloAAAAAQkIPAAAAAACAqWGBAT7Dgtl4Aqcwl1q5cwpC4n2b29Ut',
+                            'REMEMBERME': 'TytGQlVRci9VMEFVVjBFQ0FKeDBwS0NEY2RlL2xUVm5EU1FIWnM5S0ZLSmlwSTk1b3pCbTBFd1MvOW9hUi9VTFk1TG1Lb3NpbnMwdVVGYkhicTNOeXc9PTpjdXpjaElueEJjRHV3VnNvaTR2Rkx6SlNFQ1VvSElrUGVsYnMyWkxLaFFWd2dkdjVWTFhXNlFWTFZoTGdmY0lwalZsSFRlMnZPaUthNDhxeUpHRUZ2dz09',
+                            'visid_incap_1373793': 'E1zLJUlrQASBE24FywxdnVbkUloAAAAAQUIPAAAAAAAu68yvs3HRsNQH30HEdarE',
+                            'incap_ses_770_1373793': '3p0eC786UHPPd1PtEJevClbkUloAAAAAcukXA8rRCu9Zzp1SoMUs8w==',
+                            'incap_ses_770_1322663': 'fsGGfBH4Oip+L5juEJevCiyOVVoAAAAAW2HdmGf++/I9BJNCUe4NzA==',
+                        }
+                    },function(err,response, body){
+                        console.log("TRIGGER DAN");
+                        console.log("CCEX Api body is:", body);
+                        try {
+                            var summary = JSON.parse(body);
+                            var avgPrice = (summary.result.LastPrice * 100000000).toFixed(0);
+                            responseMsg = avgPrice + " Satoshi";
+                        } catch (e) {
+                            responseMsg = "API Unavailable";
+                        }
 
-                    self.cache.summaryMsg.response = responseMsg;
-                    self.cache.summaryMsg.time = Date.now();
-                    resolve(responseMsg);
-                })
+                        self.cache.summaryMsg.response = responseMsg;
+                        self.cache.summaryMsg.time = Date.now();
+                        resolve(responseMsg);
+
+                    }
+                )
+
+
+                // request.get('https://www.coinexchange.io/api/v1/getmarketsummary?market_id=334', function (err, response, body) {
+                //     console.log("TRIGGER DAN");
+                //     console.log("CCEX Api body is:", body);
+                //     try {
+                //         var summary = JSON.parse(body);
+                //         var avgPrice = (summary.result.LastPrice * 100000000).toFixed(0);
+                //         responseMsg = avgPrice + " Satoshi";
+                //     } catch (e) {
+                //         responseMsg = "API Unavailable";
+                //     }
+                //
+                //     self.cache.summaryMsg.response = responseMsg;
+                //     self.cache.summaryMsg.time = Date.now();
+                //     resolve(responseMsg);
+                // })
+
+                // request.get('https://www.coinexchange.io/api/v1/getmarketsummary?market_id=334', function (err, response, body) {
+                //     console.log("TRIGGER DAN");
+                //     console.log("CCEX Api body is:", body);
+                //     try {
+                //         var summary = JSON.parse(body);
+                //         var avgPrice = (summary.result.LastPrice * 100000000).toFixed(0);
+                //         responseMsg = avgPrice + " Satoshi";
+                //     } catch (e) {
+                //         responseMsg = "API Unavailable";
+                //     }
+                //
+                //     self.cache.summaryMsg.response = responseMsg;
+                //     self.cache.summaryMsg.time = Date.now();
+                //     resolve(responseMsg);
+                // })
             })
     }
 
