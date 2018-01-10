@@ -34,6 +34,7 @@ let ccex = function() {
                             'visid_incap_1373793': 'E1zLJUlrQASBE24FywxdnVbkUloAAAAAQUIPAAAAAAAu68yvs3HRsNQH30HEdarE',
                             'incap_ses_770_1373793': '3p0eC786UHPPd1PtEJevClbkUloAAAAAcukXA8rRCu9Zzp1SoMUs8w==',
                             'incap_ses_770_1322663': 'fsGGfBH4Oip+L5juEJevCiyOVVoAAAAAW2HdmGf++/I9BJNCUe4NzA==',
+                            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.84 Safari/537.36'
                         }
                     },function(err,response, body){
                         console.log("TRIGGER DAN");
